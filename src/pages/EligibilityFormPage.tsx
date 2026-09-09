@@ -445,8 +445,8 @@ export default function EligibilityFormPage() {
       male: 'male',
       female: 'female',
     };
-    const categoryMap: Record<string, 'SC' | 'ST' | 'MBC' | 'BC' | 'OBC' | 'OC'> = {
-      sc: 'SC', st: 'ST', mbc: 'MBC', bc: 'BC', obc: 'OBC', minority: 'BC', general: 'OC'
+    const categoryMap: Record<string, string> = {
+      sc: 'SC', st: 'ST', mbc: 'MBC', bc: 'BC', bcm: 'BCM', dnc: 'DNC', obc: 'OBC', minority: 'BC', general: 'OC'
     };
     const courseLevelMap: Record<string, 'UG' | 'PG' | 'DIPLOMA' | 'PHD'> = {
       ug: 'UG', pg: 'PG', diploma: 'DIPLOMA', phd: 'PHD', professional: 'UG'

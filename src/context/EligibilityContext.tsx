@@ -52,9 +52,25 @@ interface EligibilityContextValue extends EligibilityState {
 const EligibilityContext = createContext<EligibilityContextValue | null>(null);
 
 export function EligibilityProvider({ children }: { children: ReactNode }) {
-  const [profile, setProfile] = useState<StudentProfile | null>(null);
-  const [recommendation, setRecommendation] =
-    useState<RecommendationResponse | null>(null);
+  const [profile, setProfileState] = useState<StudentProfile | null>(() => {
+    try {
+      const saved = sessionStorage.getItem("thaguthi_profile");
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  });
+
+  const [recommendation, setRecommendationState] =
+    useState<RecommendationResponse | null>(() => {
+      try {
+        const saved = sessionStorage.getItem("thaguthi_recommendation");
+        return saved ? JSON.parse(saved) : null;
+      } catch {
+        return null;
+      }
+    });
+
   const [explanation, setExplanation] =
     useState<ExplanationResponse | null>(null);
   const [allSchemes, setAllSchemes] = useState<BackendScheme[]>([]);
@@ -63,9 +79,32 @@ export function EligibilityProvider({ children }: { children: ReactNode }) {
   const [loadingSchemes, setLoadingSchemes] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const setProfile = useCallback((p: StudentProfile) => {
+    setProfileState(p);
+    try {
+      sessionStorage.setItem("thaguthi_profile", JSON.stringify(p));
+    } catch {
+      /* ignore storage error */
+    }
+  }, []);
+
+  const setRecommendation = useCallback((rec: RecommendationResponse | null) => {
+    setRecommendationState(rec);
+    try {
+      if (rec) {
+        sessionStorage.setItem("thaguthi_recommendation", JSON.stringify(rec));
+      } else {
+        sessionStorage.removeItem("thaguthi_recommendation");
+      }
+    } catch {
+      /* ignore storage error */
+    }
+  }, []);
+
   const runAnalysis = useCallback(async (p: StudentProfile) => {
     setLoading(true);
     setError(null);
+    setProfile(p);
     setRecommendation(null);
     setExplanation(null);
     try {
@@ -100,7 +139,7 @@ export function EligibilityProvider({ children }: { children: ReactNode }) {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [setProfile, setRecommendation]);
 
   const fetchExplanation = useCallback(async () => {
     if (!profile || !recommendation) return;
@@ -142,10 +181,16 @@ export function EligibilityProvider({ children }: { children: ReactNode }) {
   }, [allSchemes.length]);
 
   const reset = useCallback(() => {
-    setProfile(null);
-    setRecommendation(null);
+    setProfileState(null);
+    setRecommendationState(null);
     setExplanation(null);
     setError(null);
+    try {
+      sessionStorage.removeItem("thaguthi_profile");
+      sessionStorage.removeItem("thaguthi_recommendation");
+    } catch {
+      /* ignore storage error */
+    }
   }, []);
 
   return (

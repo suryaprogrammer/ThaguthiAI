@@ -53,11 +53,18 @@ export default function ResultsPage() {
   const { recommendation, explanation } = useEligibility();
   const { t } = useLanguage();
 
-  const eligibleSchemes = recommendation?.eligible_schemes || [];
-  const ineligibleSchemes = recommendation?.not_eligible_schemes || [];
+  const eligibleSchemes = (recommendation?.eligible_schemes || []).filter(
+    (s) => s.eligible && s.scheme_id !== 'merit_scholarship'
+  );
+  const ineligibleSchemes = (recommendation?.not_eligible_schemes || []).filter(
+    (s) => !s.eligible
+  );
   const recommendedCombo = recommendation?.recommended_schemes || [];
   const conflicts = recommendation?.conflicts || [];
-  const totalBenefit = recommendation?.total_benefit || 0;
+  const totalBenefit =
+    recommendation?.total_benefit && recommendation.total_benefit > 0
+      ? recommendation.total_benefit
+      : recommendedCombo.reduce((sum, item) => sum + (item.benefit_amount || 0), 0);
 
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: { xs: 3, md: 5 } }}>
