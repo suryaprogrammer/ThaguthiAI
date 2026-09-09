@@ -24,6 +24,16 @@ class RecommendationService:
         elig_result = self.eligibility_service.check_eligibility(student)
         
         if not elig_result.eligible_schemes:
+            failed_reasons_set = set()
+            for s_res in elig_result.not_eligible_schemes:
+                for cond in s_res.failed_conditions:
+                    failed_reasons_set.add(cond)
+            
+            reasons_summary = list(failed_reasons_set)[:5]
+            reason_msg = "No currently matching schemes were found for the information provided."
+            if reasons_summary:
+                reason_msg += " Key factors: " + "; ".join(reasons_summary) + "."
+
             return RecommendationResponse(
                 student=student.model_dump(),
                 eligible_schemes=elig_result.eligible_schemes,
@@ -31,7 +41,7 @@ class RecommendationService:
                 conflicts=[],
                 recommended_schemes=[],
                 total_benefit=0,
-                recommendation_reason='No eligible schemes found for the given profile.',
+                recommendation_reason=reason_msg,
                 alternative_options=[]
             )
         

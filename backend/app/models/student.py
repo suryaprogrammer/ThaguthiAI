@@ -49,7 +49,16 @@ class StudentProfile(BaseModel):
     @field_validator('college_type')
     @classmethod
     def validate_college_type(cls, v: str) -> str:
-        return v.lower()
+        v_clean = v.strip().lower()
+        if v_clean in ('govt', 'government', 'government college'):
+            return 'government'
+        elif v_clean in ('aided', 'govt-aided', 'government-aided', 'government aided'):
+            return 'aided'
+        elif v_clean in ('self-financing-government-quota', 'self_financing_government_quota', 'self financing government quota', 'government quota'):
+            return 'self_financing_government_quota'
+        elif v_clean in ('private', 'self-financing', 'private/self-financing', 'private_self_financing'):
+            return 'private_self_financing'
+        return v_clean
         
     model_config = {
         "json_schema_extra": {

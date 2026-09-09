@@ -170,10 +170,38 @@ class RuleEngine:
         if not allowed:
             matched.append('College type: No restriction')
             return
-        if student.college_type in [c.lower() for c in allowed]:
+        
+        st_type = student.college_type.strip().lower()
+        if st_type in ('govt', 'government', 'government college'):
+            st_canonical = 'government'
+        elif st_type in ('aided', 'govt-aided', 'government-aided', 'government aided'):
+            st_canonical = 'aided'
+        elif st_type in ('self-financing-government-quota', 'self_financing_government_quota', 'self financing government quota', 'government quota'):
+            st_canonical = 'self_financing_government_quota'
+        elif st_type in ('private', 'self-financing', 'private/self-financing', 'private_self_financing'):
+            st_canonical = 'private_self_financing'
+        else:
+            st_canonical = st_type
+
+        allowed_canonical = []
+        for c in allowed:
+            c_clean = c.strip().lower()
+            if c_clean in ('govt', 'government', 'government college'):
+                allowed_canonical.append('government')
+            elif c_clean in ('aided', 'govt-aided', 'government-aided', 'government aided'):
+                allowed_canonical.append('aided')
+            elif c_clean in ('self-financing-government-quota', 'self_financing_government_quota', 'self financing government quota', 'government quota'):
+                allowed_canonical.append('self_financing_government_quota')
+            elif c_clean in ('private', 'self-financing', 'private/self-financing', 'private_self_financing'):
+                allowed_canonical.append('private_self_financing')
+            else:
+                allowed_canonical.append(c_clean)
+
+        if st_canonical in allowed_canonical:
             matched.append(f'College type matches: {student.college_type}')
         else:
-            failed.append(f'College type must be one of {allowed}, got {student.college_type}')
+            allowed_str = ", ".join(allowed)
+            failed.append(f'College type requirement not satisfied: scheme requires {allowed_str}, student institution is {student.college_type}')
     
     def _check_school_background(self, student: StudentProfile, elig: dict, matched: list, failed: list):
         required = elig.get('school_background', [])
@@ -219,13 +247,19 @@ class RuleEngine:
     
     def _check_first_graduate(self, student: StudentProfile, elig: dict, matched: list, failed: list):
         required = elig.get('first_graduate_required')
-        if required is None or required is False:
+        if required is None:
             matched.append('First graduate: No requirement')
             return
-        if student.first_graduate:
-            matched.append('First graduate status: Meets requirement')
-        else:
-            failed.append('First graduate status required but student is not a first-generation graduate')
+        if required is True:
+            if student.first_graduate:
+                matched.append('First graduate status: Meets requirement')
+            else:
+                failed.append('First graduate status required but student is not a first-generation graduate')
+        elif required is False:
+            if not student.first_graduate:
+                matched.append('Non-first-graduate condition satisfied')
+            else:
+                failed.append('Scheme requires non-first-graduate student condition')
     
     def get_scheme_by_id(self, scheme_id: str) -> dict | None:
         for scheme in self.schemes:

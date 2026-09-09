@@ -209,6 +209,132 @@ class TestEligibility:
         assert 'sc_scholarship' not in recommended_ids, "SC scholarship must NEVER be recommended to BC student"
         assert 'st_scholarship' not in recommended_ids, "ST scholarship must NEVER be recommended to BC student"
 
+    # --- FULL VALID STUDENT MATRIX TESTS (A through K) ---
+
+    def test_matrix_a_bc_government_ug(self):
+        """TEST A: BC + Government College + UG degree"""
+        student = BASE_STUDENT.copy()
+        student['category'] = 'BC'
+        student['college_type'] = 'government'
+        student['course_level'] = 'UG'
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        assert 'bc_mbc_free_education' in eligible_ids or 'bc_mbc_scholarship' in eligible_ids
+        assert 'sc_scholarship' not in eligible_ids
+
+    def test_matrix_b_mbc_government_aided(self):
+        """TEST B: MBC + Government Aided + UG course"""
+        student = BASE_STUDENT.copy()
+        student['category'] = 'MBC'
+        student['college_type'] = 'aided'
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        assert 'bc_mbc_free_education' in eligible_ids or 'bc_mbc_scholarship' in eligible_ids
+
+    def test_matrix_c_dnc_eligible_course(self):
+        """TEST C: DNC + eligible course"""
+        student = BASE_STUDENT.copy()
+        student['category'] = 'DNC'
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        assert 'bc_mbc_free_education' in eligible_ids or 'bc_mbc_scholarship' in eligible_ids
+
+    def test_matrix_d_sc_eligible_course(self):
+        """TEST D: SC + eligible course"""
+        student = BASE_STUDENT.copy()
+        student['category'] = 'SC'
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        assert 'sc_scholarship' in eligible_ids
+
+    def test_matrix_e_st_eligible_course(self):
+        """TEST E: ST + eligible course"""
+        student = BASE_STUDENT.copy()
+        student['category'] = 'ST'
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        assert 'st_scholarship' in eligible_ids
+
+    def test_matrix_f_pudhumai_penn_caste_independent(self):
+        """TEST F: Female + Govt School background (Pudhumai Penn independent of caste)"""
+        student = BASE_STUDENT.copy()
+        student['gender'] = 'female'
+        student['category'] = 'OC'
+        student['government_school_background'] = True
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        assert 'pudhumai_penn' in eligible_ids
+
+    def test_matrix_g_tamil_pudhalvan_caste_independent(self):
+        """TEST G: Male + Govt School background (Tamil Pudhalvan independent of caste)"""
+        student = BASE_STUDENT.copy()
+        student['gender'] = 'male'
+        student['category'] = 'OC'
+        student['government_school_background'] = True
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        assert 'tamil_pudhalvan' in eligible_ids
+
+    def test_matrix_h_differently_abled(self):
+        """TEST H: Differently Abled student"""
+        student = BASE_STUDENT.copy()
+        student['disability'] = True
+        student['disability_percentage'] = 45
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        assert 'disability_scholarship' in eligible_ids
+
+    def test_matrix_i_oc_general_student(self):
+        """TEST I: OC / General student evaluates non-caste schemes"""
+        student = BASE_STUDENT.copy()
+        student['category'] = 'OC'
+        student['marks_percentage'] = 88.0
+        student['annual_family_income'] = 150000.0
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        assert 'merit_scholarship' in eligible_ids
+
+    def test_matrix_j_self_financing_government_quota(self):
+        """TEST J: Self-Financing Government Quota student"""
+        student = BASE_STUDENT.copy()
+        student['category'] = 'BC'
+        student['college_type'] = 'self_financing_government_quota'
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        assert 'bc_mbc_scholarship' in eligible_ids
+
+    def test_matrix_k_private_self_financing_isolation(self):
+        """TEST K: Private Self-Financing student does NOT get Govt-quota-only schemes"""
+        student = BASE_STUDENT.copy()
+        student['category'] = 'BC'
+        student['college_type'] = 'private_self_financing'
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        # bc_mbc_free_education requires government or aided, should not match private_self_financing
+        assert 'bc_mbc_free_education' not in eligible_ids
+
 
 class TestSchemes:
     """Tests for the /api/schemes endpoints."""
