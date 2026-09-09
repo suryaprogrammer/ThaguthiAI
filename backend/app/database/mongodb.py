@@ -2,6 +2,12 @@ import os
 import logging
 from pymongo import MongoClient
 
+try:
+    import certifi
+    ca_file = certifi.where()
+except ImportError:
+    ca_file = None
+
 logger = logging.getLogger(__name__)
 
 class MongoDB:
@@ -13,13 +19,24 @@ class MongoDB:
     @classmethod
     def connect(cls):
         uri = os.getenv('MONGODB_URI')
-        db_name = os.getenv('DATABASE_NAME', 'thaguthiai')
+        if uri:
+            uri = uri.strip()
+        db_name = os.getenv('DATABASE_NAME', 'thaguthiai').strip() if os.getenv('DATABASE_NAME') else 'thaguthiai'
+        
         if not uri:
             logger.warning('MONGODB_URI not set. Running without database.')
             cls._connected = False
             return
+            
         try:
-            cls._client = MongoClient(uri, serverSelectionTimeoutMS=5000)
+            client_kwargs = {
+                'serverSelectionTimeoutMS': 10000,
+                'connectTimeoutMS': 10000,
+            }
+            if ca_file:
+                client_kwargs['tlsCAFile'] = ca_file
+
+            cls._client = MongoClient(uri, **client_kwargs)
             cls._client.admin.command('ping')
             cls._db = cls._client[db_name]
             cls._connected = True
