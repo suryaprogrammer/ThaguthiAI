@@ -59,13 +59,14 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS configuration for future React frontend
+# CORS configuration for React frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         'http://localhost:3000',
         'http://localhost:5173',
         'http://localhost:8080',
+        'https://thaguthiai.vercel.app',
     ],
     allow_credentials=True,
     allow_methods=['*'],
