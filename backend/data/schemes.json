@@ -1,0 +1,155 @@
+[
+  {
+    "id": "bc_mbc_scholarship",
+    "name": "BC/MBC Post-Matric Scholarship (Demo)",
+    "department": "Backward Classes and Minorities Welfare Department",
+    "description": "Financial assistance for BC/MBC students to pursue post-matriculation courses.",
+    "benefit": "Yearly scholarship amount credited directly to bank account.",
+    "benefit_amount": 12000.0,
+    "frequency": "annual",
+    "demo": true,
+    "data_status": "sample/demo - verify against current government notification",
+    "eligibility": {
+      "categories": ["BC", "BCM", "MBC", "DNC"],
+      "max_income": 200000.0,
+      "education_levels": ["UG", "PG", "Diploma"]
+    },
+    "conflicts_with": ["sc_st_scholarship", "minority_scholarship"],
+    "official_source": "https://www.bcmbcmw.tn.gov.in/",
+    "last_verified": "2023-10-01"
+  },
+  {
+    "id": "sc_st_scholarship",
+    "name": "SC/ST Post-Matric Scholarship (Demo)",
+    "department": "Adi Dravidar and Tribal Welfare Department",
+    "description": "Financial assistance for SC/ST students for higher education.",
+    "benefit": "Yearly scholarship covering tuition and maintenance.",
+    "benefit_amount": 15000.0,
+    "frequency": "annual",
+    "demo": true,
+    "data_status": "sample/demo - verify against current government notification",
+    "eligibility": {
+      "categories": ["SC", "ST", "SCA"],
+      "max_income": 250000.0,
+      "education_levels": ["UG", "PG", "Diploma", "PhD"]
+    },
+    "conflicts_with": ["bc_mbc_scholarship"],
+    "official_source": "https://www.adwelfare.tn.gov.in/",
+    "last_verified": "2023-10-01"
+  },
+  {
+    "id": "first_graduate_assistance",
+    "name": "First Graduate Financial Assistance (Demo)",
+    "department": "Higher Education Department",
+    "description": "Fee concession for students who are the first in their family to graduate.",
+    "benefit": "Tuition fee waiver for professional and non-professional courses.",
+    "benefit_amount": 10000.0,
+    "frequency": "annual",
+    "demo": true,
+    "data_status": "sample/demo - verify against current government notification",
+    "eligibility": {
+      "first_graduate_required": true,
+      "education_levels": ["UG"],
+      "max_income": 250000.0
+    },
+    "conflicts_with": [],
+    "official_source": "https://www.tn.gov.in/scheme/data_view/7326",
+    "last_verified": "2023-10-01"
+  },
+  {
+    "id": "disability_scholarship",
+    "name": "Differently Abled Students Scholarship (Demo)",
+    "department": "Welfare of Differently Abled Persons Department",
+    "description": "Scholarship for students with disabilities to support their education.",
+    "benefit": "Annual financial support.",
+    "benefit_amount": 18000.0,
+    "frequency": "annual",
+    "demo": true,
+    "data_status": "sample/demo - verify against current government notification",
+    "eligibility": {
+      "disability_required": true,
+      "max_income": 300000.0
+    },
+    "conflicts_with": [],
+    "official_source": "https://www.ssdg.tn.gov.in/",
+    "last_verified": "2023-10-01"
+  },
+  {
+    "id": "minority_scholarship",
+    "name": "Minority Students Scholarship (Demo)",
+    "department": "Backward Classes and Minorities Welfare Department",
+    "description": "Scholarship targeted at minority students for higher education.",
+    "benefit": "Annual scholarship amount.",
+    "benefit_amount": 10000.0,
+    "frequency": "annual",
+    "demo": true,
+    "data_status": "sample/demo - verify against current government notification",
+    "eligibility": {
+      "minority_required": true,
+      "max_income": 200000.0,
+      "education_levels": ["UG", "PG"]
+    },
+    "conflicts_with": ["bc_mbc_scholarship"],
+    "official_source": "https://www.bcmbcmw.tn.gov.in/",
+    "last_verified": "2023-10-01"
+  },
+  {
+    "id": "merit_scholarship",
+    "name": "Tamil Nadu Merit Scholarship (Demo)",
+    "department": "Higher Education Department",
+    "description": "Scholarship awarded to meritorious students based on academic performance.",
+    "benefit": "Cash award distributed annually.",
+    "benefit_amount": 20000.0,
+    "frequency": "annual",
+    "demo": true,
+    "data_status": "sample/demo - verify against current government notification",
+    "eligibility": {
+      "min_marks": 85.0,
+      "max_income": 300000.0,
+      "education_levels": ["UG", "PG"]
+    },
+    "conflicts_with": [],
+    "official_source": "https://www.tn.gov.in/",
+    "last_verified": "2023-10-01"
+  },
+  {
+    "id": "pudhumai_penn",
+    "name": "Pudhumai Penn Scheme (Demo)",
+    "department": "Social Welfare and Women Empowerment Department",
+    "description": "Assistance for girl students who studied in government schools.",
+    "benefit": "Rs. 1000 per month until completion of UG degree.",
+    "benefit_amount": 12000.0,
+    "frequency": "annual",
+    "demo": true,
+    "data_status": "sample/demo - verify against current government notification",
+    "eligibility": {
+      "gender": ["female"],
+      "school_background": ["government"],
+      "education_levels": ["UG"],
+      "max_income": null
+    },
+    "conflicts_with": ["tamil_pudhalvan"],
+    "official_source": "https://www.tnsocialwelfare.tn.gov.in/",
+    "last_verified": "2023-10-01"
+  },
+  {
+    "id": "tamil_pudhalvan",
+    "name": "Tamil Pudhalvan Scheme (Demo)",
+    "department": "Higher Education Department",
+    "description": "Assistance for boy students who studied in government schools.",
+    "benefit": "Rs. 1000 per month until completion of UG degree.",
+    "benefit_amount": 12000.0,
+    "frequency": "annual",
+    "demo": true,
+    "data_status": "sample/demo - verify against current government notification",
+    "eligibility": {
+      "gender": ["male"],
+      "school_background": ["government"],
+      "education_levels": ["UG"],
+      "max_income": null
+    },
+    "conflicts_with": ["pudhumai_penn"],
+    "official_source": "https://www.tn.gov.in/",
+    "last_verified": "2023-10-01"
+  }
+]
