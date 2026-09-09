@@ -305,16 +305,37 @@ class TestEligibility:
         assert 'disability_educational_scholarship' in eligible_ids
 
     def test_matrix_i_oc_general_student(self):
-        """TEST I: OC / General student evaluates non-caste schemes"""
+        """TEST I: OC / General student evaluates category-independent schemes"""
         student = BASE_STUDENT.copy()
         student['category'] = 'OC'
-        student['marks_percentage'] = 88.0
+        student['first_graduate'] = True
         student['annual_family_income'] = 150000.0
         response = client.post('/api/eligibility/check', json=student)
         assert response.status_code == 200
         data = response.json()
         eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
-        assert 'merit_scholarship' in eligible_ids
+        # First graduate assistance is category-independent, matches OC First Graduate
+        assert 'first_graduate_assistance' in eligible_ids
+        # Merit scholarship requires verification so MUST NOT be in eligible_ids
+        assert 'merit_scholarship' not in eligible_ids
+
+    def test_requires_verification_schemes_never_eligible(self):
+        """Test that schemes marked requires_verification are NEVER returned as eligible or recommended."""
+        student = BASE_STUDENT.copy()
+        student['marks_percentage'] = 99.0
+        response = client.post('/api/eligibility/check', json=student)
+        assert response.status_code == 200
+        data = response.json()
+        eligible_ids = [s['scheme_id'] for s in data['eligible_schemes']]
+        assert 'merit_scholarship' not in eligible_ids
+        assert 'bc_mbc_polytechnic_free_education' not in eligible_ids
+
+        rec_response = client.post('/api/recommendation', json=student)
+        assert rec_response.status_code == 200
+        rec_data = rec_response.json()
+        rec_ids = [s['scheme_id'] for s in rec_data['recommended_schemes']]
+        assert 'merit_scholarship' not in rec_ids
+        assert 'bc_mbc_polytechnic_free_education' not in rec_ids
 
     def test_matrix_j_self_financing_government_quota(self):
         """TEST J: Self-Financing Government Quota student"""

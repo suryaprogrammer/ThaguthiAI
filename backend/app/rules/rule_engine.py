@@ -39,6 +39,18 @@ class RuleEngine:
     
     def _evaluate_scheme(self, student: StudentProfile, scheme: dict) -> SchemeEligibilityResult:
         """Evaluate a single student against a single scheme."""
+        data_status = scheme.get('data_status', '')
+        if data_status.startswith('requires_verification') or scheme.get('requires_verification') is True:
+            reason = f'Official eligibility criteria for {scheme["name"]} require verification.'
+            return SchemeEligibilityResult(
+                scheme_id=scheme['id'],
+                scheme_name=scheme['name'],
+                eligible=False,
+                matched_conditions=[],
+                failed_conditions=[reason],
+                reasons=[reason]
+            )
+
         eligibility = scheme.get('eligibility', {})
         matched = []
         failed = []
