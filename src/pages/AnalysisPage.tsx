@@ -7,19 +7,27 @@ import Paper from '@mui/material/Paper';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import { useNavigate } from 'react-router-dom';
-
-const analysisSteps = [
-  'Reading student profile',
-  'Checking scheme requirements',
-  'Comparing eligible schemes',
-  'Checking benefit conflicts',
-  'Preparing recommendation',
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function AnalysisPage() {
   const [completed, setCompleted] = useState<number[]>([]);
   const [current, setCurrent] = useState(0);
   const navigate = useNavigate();
+  const { t, language } = useLanguage();
+
+  const analysisSteps = language === 'ta' ? [
+    'மாணவர் சுயவிவரத்தை சரிபார்க்கிறது',
+    'திட்டங்களின் தகுதிகளை ஒப்பிடுகிறது',
+    'தகுதியான திட்டங்களை வரிசைப்படுத்துகிறது',
+    'முரண்பாடுகளை சரிபார்க்கிறது',
+    'பரிந்துரைகளை ஆயத்தம் செய்கிறது',
+  ] : [
+    'Reading student profile',
+    'Checking scheme requirements',
+    'Comparing eligible schemes',
+    'Checking benefit conflicts',
+    'Preparing recommendation',
+  ];
 
   useEffect(() => {
     const timers: ReturnType<typeof setTimeout>[] = [];
@@ -28,16 +36,16 @@ export default function AnalysisPage() {
         setTimeout(() => {
           setCurrent(i + 1);
           setCompleted((prev) => [...prev, i]);
-        }, (i + 1) * 1000)
+        }, (i + 1) * 800)
       );
     });
     timers.push(
       setTimeout(() => {
         navigate('/results');
-      }, (analysisSteps.length + 1) * 1000 + 400)
+      }, (analysisSteps.length + 1) * 800 + 300)
     );
     return () => timers.forEach(clearTimeout);
-  }, [navigate]);
+  }, [navigate, analysisSteps.length]);
 
   return (
     <Box
@@ -88,11 +96,11 @@ export default function AnalysisPage() {
             </Typography>
           </Box>
 
-          <Typography variant="h5" sx={{ mb: 0.75, fontWeight: 700 }}>
-            Checking your eligibility...
+          <Typography variant="h5" sx={{ mb: 0.75, fontWeight: 700, color: 'primary.main' }}>
+            {t('loading')}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary', mb: 4 }}>
-            Comparing your profile against scheme requirements. This takes only a moment.
+            {language === 'ta' ? 'உங்கள் தகுதிகள் சரிபார்க்கப்படுகின்றன...' : 'Comparing your profile against scheme requirements. This takes only a moment.'}
           </Typography>
 
           <Box sx={{ textAlign: 'left', maxWidth: 360, mx: 'auto' }}>
@@ -138,7 +146,7 @@ export default function AnalysisPage() {
 
           <Box sx={{ mt: 4, pt: 3, borderTop: '1px solid', borderColor: 'divider' }}>
             <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-              Scheme data is for guidance only. Always verify eligibility through official government portals.
+              {t('footerDisclaimer')}
             </Typography>
           </Box>
         </Paper>

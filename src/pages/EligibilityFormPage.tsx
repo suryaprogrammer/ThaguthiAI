@@ -14,22 +14,21 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputLabel from '@mui/material/InputLabel';
 import Checkbox from '@mui/material/Checkbox';
-import FormGroup from '@mui/material/FormGroup';
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import Chip from '@mui/material/Chip';
-import Alert from '@mui/material/Alert';
+import Autocomplete from '@mui/material/Autocomplete';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import { useNavigate } from 'react-router-dom';
-import { districts, courses } from '../mockData';
+import { courses } from '../mockData';
+import { tnDistricts } from '../data/districts';
+import { tnColleges } from '../data/colleges';
 import { useEligibility } from '../context/EligibilityContext';
+import { useLanguage } from '../context/LanguageContext';
 import type { StudentProfile } from '../services/api';
-
-const steps = ['Personal', 'Education', 'Financial', 'Additional', 'Review'];
 
 interface FormData {
   fullName: string;
@@ -68,9 +67,12 @@ const initialForm: FormData = {
 };
 
 function StepIndicator({ current }: { current: number }) {
+  const { t } = useLanguage();
+  const stepLabels = [t('stepPersonal'), t('stepEducation'), t('stepFinancial'), t('stepReview')];
+
   return (
     <Box sx={{ display: 'flex', alignItems: 'center', mb: 4, overflowX: 'auto', pb: 0.5 }}>
-      {steps.map((label, i) => (
+      {stepLabels.map((label, i) => (
         <Box key={i} sx={{ display: 'flex', alignItems: 'center' }}>
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
             <Box
@@ -102,7 +104,7 @@ function StepIndicator({ current }: { current: number }) {
               {label}
             </Typography>
           </Box>
-          {i < steps.length - 1 && (
+          {i < stepLabels.length - 1 && (
             <Box
               sx={{
                 flex: 1,
@@ -139,41 +141,54 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 }
 
 function PersonalStep({ form, setForm }: { form: FormData; setForm: (f: FormData) => void }) {
+  const { t } = useLanguage();
   return (
     <Box>
-      <SectionHeading>Personal Information</SectionHeading>
+      <SectionHeading>{t('stepPersonal')}</SectionHeading>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
-            fullWidth label="Full Name" value={form.fullName}
+            fullWidth
+            label={t('labelFullName')}
+            value={form.fullName}
             onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-            placeholder="As per government documents"
-            helperText="Enter name as it appears on official certificates"
+            placeholder={t('placeholderFullName')}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <TextField
-            fullWidth label="Age" type="number" value={form.age}
+            fullWidth
+            label={t('labelAge')}
+            type="number"
+            value={form.age}
             onChange={(e) => setForm({ ...form, age: e.target.value })}
             inputProps={{ min: 14, max: 40 }}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
-          <FormControl fullWidth>
-            <InputLabel>District</InputLabel>
-            <Select value={form.district} label="District" onChange={(e) => setForm({ ...form, district: e.target.value })}>
-              {districts.map((d) => <MenuItem key={d} value={d}>{d}</MenuItem>)}
-            </Select>
-          </FormControl>
+          <Autocomplete
+            fullWidth
+            options={tnDistricts}
+            value={form.district || null}
+            onChange={(_, newValue) => setForm({ ...form, district: newValue || '' })}
+            noOptionsText={t('noResultsFound')}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={t('labelDistrict')}
+                placeholder={t('placeholderDistrict')}
+              />
+            )}
+          />
         </Grid>
         <Grid size={{ xs: 12 }}>
           <FormControl>
-            <FormLabel sx={{ fontWeight: 600, color: 'text.primary', mb: 1 }}>Gender</FormLabel>
+            <FormLabel sx={{ fontWeight: 600, color: 'text.primary', mb: 1 }}>{t('labelGender')}</FormLabel>
             <RadioGroup row value={form.gender} onChange={(e) => setForm({ ...form, gender: e.target.value })}>
-              <FormControlLabel value="male" control={<Radio />} label="Male" />
-              <FormControlLabel value="female" control={<Radio />} label="Female" />
-              <FormControlLabel value="transgender" control={<Radio />} label="Transgender" />
-              <FormControlLabel value="prefer-not" control={<Radio />} label="Prefer not to say" />
+              <FormControlLabel value="male" control={<Radio />} label={t('genderMale')} />
+              <FormControlLabel value="female" control={<Radio />} label={t('genderFemale')} />
+              <FormControlLabel value="transgender" control={<Radio />} label={t('genderTransgender')} />
+              <FormControlLabel value="prefer-not" control={<Radio />} label={t('genderPreferNot')} />
             </RadioGroup>
           </FormControl>
         </Grid>
@@ -183,72 +198,79 @@ function PersonalStep({ form, setForm }: { form: FormData; setForm: (f: FormData
 }
 
 function EducationStep({ form, setForm }: { form: FormData; setForm: (f: FormData) => void }) {
+  const { t } = useLanguage();
   return (
     <Box>
-      <SectionHeading>Education Details</SectionHeading>
+      <SectionHeading>{t('stepEducation')}</SectionHeading>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
           <FormControl fullWidth>
-            <InputLabel>Education Level</InputLabel>
-            <Select value={form.educationLevel} label="Education Level" onChange={(e) => setForm({ ...form, educationLevel: e.target.value })}>
-              <MenuItem value="diploma">Diploma / Polytechnic</MenuItem>
-              <MenuItem value="ug">Undergraduate (UG)</MenuItem>
-              <MenuItem value="pg">Postgraduate (PG)</MenuItem>
-              <MenuItem value="phd">Ph.D. / Research</MenuItem>
-              <MenuItem value="professional">Professional (MBBS, BL, etc.)</MenuItem>
+            <InputLabel>{t('labelEducationLevel')}</InputLabel>
+            <Select value={form.educationLevel} label={t('labelEducationLevel')} onChange={(e) => setForm({ ...form, educationLevel: e.target.value })}>
+              <MenuItem value="diploma">{t('eduDiploma')}</MenuItem>
+              <MenuItem value="ug">{t('eduUg')}</MenuItem>
+              <MenuItem value="pg">{t('eduPg')}</MenuItem>
+              <MenuItem value="phd">{t('eduPhd')}</MenuItem>
+              <MenuItem value="professional">{t('eduProfessional')}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <FormControl fullWidth>
-            <InputLabel>Course / Programme</InputLabel>
-            <Select value={form.course} label="Course / Programme" onChange={(e) => setForm({ ...form, course: e.target.value })}>
+            <InputLabel>{t('labelCourse')}</InputLabel>
+            <Select value={form.course} label={t('labelCourse')} onChange={(e) => setForm({ ...form, course: e.target.value })}>
               {courses.map((c) => <MenuItem key={c} value={c}>{c}</MenuItem>)}
             </Select>
           </FormControl>
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <FormControl fullWidth>
-            <InputLabel>Year of Study</InputLabel>
-            <Select value={form.yearOfStudy} label="Year of Study" onChange={(e) => setForm({ ...form, yearOfStudy: e.target.value })}>
-              <MenuItem value="1">1st Year</MenuItem>
-              <MenuItem value="2">2nd Year</MenuItem>
-              <MenuItem value="3">3rd Year</MenuItem>
-              <MenuItem value="4">4th Year</MenuItem>
-              <MenuItem value="5">5th Year</MenuItem>
+            <InputLabel>{t('labelYearOfStudy')}</InputLabel>
+            <Select value={form.yearOfStudy} label={t('labelYearOfStudy')} onChange={(e) => setForm({ ...form, yearOfStudy: e.target.value })}>
+              <MenuItem value="1">{t('year1')}</MenuItem>
+              <MenuItem value="2">{t('year2')}</MenuItem>
+              <MenuItem value="3">{t('year3')}</MenuItem>
+              <MenuItem value="4">{t('year4')}</MenuItem>
+              <MenuItem value="5">{t('year5')}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid size={{ xs: 12, sm: 6, md: 4 }}>
           <FormControl fullWidth>
-            <InputLabel>College / Institution Type</InputLabel>
-            <Select value={form.collegeType} label="College / Institution Type" onChange={(e) => setForm({ ...form, collegeType: e.target.value })}>
-              <MenuItem value="govt">Government College</MenuItem>
-              <MenuItem value="govt-aided">Government-Aided College</MenuItem>
-              <MenuItem value="private">Private (Self-Financing)</MenuItem>
-              <MenuItem value="deemed">Deemed University</MenuItem>
-              <MenuItem value="central">Central University / IIT / NIT</MenuItem>
+            <InputLabel>{t('labelCollegeType')}</InputLabel>
+            <Select value={form.collegeType} label={t('labelCollegeType')} onChange={(e) => setForm({ ...form, collegeType: e.target.value })}>
+              <MenuItem value="govt">{t('collegeTypeGovt')}</MenuItem>
+              <MenuItem value="govt-aided">{t('collegeTypeAided')}</MenuItem>
+              <MenuItem value="private">{t('collegeTypePrivate')}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid size={{ xs: 12, md: 4 }}>
           <FormControl fullWidth>
-            <InputLabel>School Background</InputLabel>
-            <Select value={form.schoolBackground} label="School Background" onChange={(e) => setForm({ ...form, schoolBackground: e.target.value })}>
-              <MenuItem value="govt-school">Government School</MenuItem>
-              <MenuItem value="govt-aided-school">Government-Aided School</MenuItem>
-              <MenuItem value="private-school">Private School</MenuItem>
-              <MenuItem value="cbse">CBSE / Matriculation</MenuItem>
+            <InputLabel>{t('labelSchoolBg')}</InputLabel>
+            <Select value={form.schoolBackground} label={t('labelSchoolBg')} onChange={(e) => setForm({ ...form, schoolBackground: e.target.value })}>
+              <MenuItem value="govt-school">{t('schoolBgGovt')}</MenuItem>
+              <MenuItem value="govt-aided-school">{t('schoolBgAided')}</MenuItem>
+              <MenuItem value="private-school">{t('schoolBgPrivate')}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid size={{ xs: 12 }}>
-          <TextField
+          <Autocomplete
+            freeSolo
             fullWidth
-            label="College / Institution Name"
+            options={tnColleges}
             value={form.collegeName}
-            onChange={(e) => setForm({ ...form, collegeName: e.target.value })}
-            placeholder="Full name of your college or institution"
+            onChange={(_, newValue) => setForm({ ...form, collegeName: newValue || '' })}
+            onInputChange={(_, newInputValue) => setForm({ ...form, collegeName: newInputValue })}
+            noOptionsText={t('noResultsFound')}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label={t('labelCollegeName')}
+                placeholder={t('placeholderCollegeName')}
+              />
+            )}
           />
         </Grid>
       </Grid>
@@ -257,77 +279,49 @@ function EducationStep({ form, setForm }: { form: FormData; setForm: (f: FormDat
 }
 
 function FinancialStep({ form, setForm }: { form: FormData; setForm: (f: FormData) => void }) {
+  const { t } = useLanguage();
   return (
     <Box>
-      <SectionHeading>Financial Information</SectionHeading>
+      <SectionHeading>{t('stepFinancial')}</SectionHeading>
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
           <TextField
             fullWidth
-            label="Annual Family Income (₹)"
+            label={t('labelIncome')}
             type="number"
             value={form.annualIncome}
             onChange={(e) => setForm({ ...form, annualIncome: e.target.value })}
-            helperText="Total annual income of all family members. Refer to your Income Certificate."
+            helperText={t('incomeHelpText')}
             inputProps={{ min: 0 }}
-            placeholder="e.g. 150000"
+            placeholder={t('placeholderIncome')}
           />
         </Grid>
-        <Grid size={{ xs: 12 }}>
-          <Alert severity="info" sx={{ mt: 1 }}>
-            Income as stated in your official Income Certificate issued by the Tahsildar or Revenue Officer will be considered.
-          </Alert>
-        </Grid>
-      </Grid>
-    </Box>
-  );
-}
-
-function AdditionalStep({ form, setForm }: { form: FormData; setForm: (f: FormData) => void }) {
-  const specialCats = [
-    'Ex-Serviceman Ward', 'Widow / Single Parent Ward', 'Visually Impaired',
-    'Hearing Impaired', 'Physically Challenged', 'Destitute',
-  ];
-  const toggleSpecial = (val: string) => {
-    const existing = form.specialCategory;
-    setForm({
-      ...form,
-      specialCategory: existing.includes(val) ? existing.filter((x) => x !== val) : [...existing, val],
-    });
-  };
-
-  return (
-    <Box>
-      <SectionHeading>Social &amp; Eligibility Details</SectionHeading>
-      <Grid container spacing={3}>
         <Grid size={{ xs: 12, md: 6 }}>
           <FormControl fullWidth>
-            <InputLabel>Community</InputLabel>
-            <Select value={form.community} label="Community" onChange={(e) => setForm({ ...form, community: e.target.value })}>
-              <MenuItem value="sc">Scheduled Caste (SC)</MenuItem>
-              <MenuItem value="st">Scheduled Tribe (ST)</MenuItem>
-              <MenuItem value="mbc">Most Backward Class (MBC)</MenuItem>
-              <MenuItem value="bc">Backward Class (BC)</MenuItem>
-              <MenuItem value="obc">Other Backward Class (OBC)</MenuItem>
-              <MenuItem value="minority">Minority Community</MenuItem>
-              <MenuItem value="general">General / Others</MenuItem>
+            <InputLabel>{t('labelCommunity')}</InputLabel>
+            <Select value={form.community} label={t('labelCommunity')} onChange={(e) => setForm({ ...form, community: e.target.value })}>
+              <MenuItem value="sc">{t('commSC')}</MenuItem>
+              <MenuItem value="st">{t('commST')}</MenuItem>
+              <MenuItem value="mbc">{t('commMBC')}</MenuItem>
+              <MenuItem value="bc">{t('commBC')}</MenuItem>
+              <MenuItem value="bcm">{t('commBCM')}</MenuItem>
+              <MenuItem value="dnc">{t('commDNC')}</MenuItem>
+              <MenuItem value="obc">{t('commOBC')}</MenuItem>
+              <MenuItem value="minority">{t('commMinority')}</MenuItem>
+              <MenuItem value="general">{t('commGeneral')}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
         <Grid size={{ xs: 12, md: 6 }}>
           <FormControl fullWidth>
-            <InputLabel>Disability Status</InputLabel>
-            <Select value={form.disabilityStatus} label="Disability Status" onChange={(e) => setForm({ ...form, disabilityStatus: e.target.value })}>
-              <MenuItem value="none">No Disability</MenuItem>
-              <MenuItem value="visual">Visual Impairment</MenuItem>
-              <MenuItem value="hearing">Hearing Impairment</MenuItem>
-              <MenuItem value="physical">Physical Disability</MenuItem>
-              <MenuItem value="multiple">Multiple Disabilities</MenuItem>
-              <MenuItem value="other">Other Certified Disability</MenuItem>
+            <InputLabel>{t('labelDisability')}</InputLabel>
+            <Select value={form.disabilityStatus} label={t('labelDisability')} onChange={(e) => setForm({ ...form, disabilityStatus: e.target.value })}>
+              <MenuItem value="none">{t('disabilityNone')}</MenuItem>
+              <MenuItem value="physical">{t('disabilityPhysical')}</MenuItem>
             </Select>
           </FormControl>
         </Grid>
-        <Grid size={{ xs: 12 }}>
+        <Grid size={{ xs: 12, md: 6 }}>
           <FormControlLabel
             control={
               <Checkbox
@@ -336,114 +330,70 @@ function AdditionalStep({ form, setForm }: { form: FormData; setForm: (f: FormDa
                 color="primary"
               />
             }
-            label={
-              <Box>
-                <Typography variant="body2" sx={{ fontWeight: 500 }}>First Graduate in Family</Typography>
-                <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                  Check if no parent or sibling has previously completed a degree-level qualification.
-                </Typography>
-              </Box>
-            }
+            label={t('labelFirstGraduate')}
           />
-        </Grid>
-        <Grid size={{ xs: 12 }}>
-          <FormLabel sx={{ fontWeight: 600, color: 'text.primary', display: 'block', mb: 1.5 }}>
-            Special Category (if applicable)
-          </FormLabel>
-          <FormGroup>
-            <Grid container spacing={1}>
-              {specialCats.map((cat) => (
-                <Grid key={cat} size={{ xs: 12, sm: 6 }}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={form.specialCategory.includes(cat)}
-                        onChange={() => toggleSpecial(cat)}
-                        color="primary"
-                        size="small"
-                      />
-                    }
-                    label={<Typography variant="body2">{cat}</Typography>}
-                  />
-                </Grid>
-              ))}
-            </Grid>
-          </FormGroup>
         </Grid>
       </Grid>
     </Box>
   );
 }
 
-function ReviewSection({ label, items, onEdit }: { label: string; items: { key: string; value: string }[]; onEdit: () => void }) {
-  return (
-    <Paper elevation={0} sx={{ border: '1px solid', borderColor: 'divider', mb: 2 }}>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 2.5, py: 1.5, borderBottom: '1px solid', borderColor: 'divider', bgcolor: '#f8f9fa' }}>
-        <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'text.primary' }}>{label}</Typography>
-        <Button size="small" startIcon={<EditOutlinedIcon />} onClick={onEdit} sx={{ color: 'primary.main', fontWeight: 600 }}>Edit</Button>
-      </Box>
-      <Box sx={{ p: 2.5 }}>
-        <Grid container spacing={1.5}>
-          {items.map(({ key, value }) => (
-            <Grid key={key} size={{ xs: 12, sm: 6 }}>
-              <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>{key}</Typography>
-              <Typography variant="body2" sx={{ fontWeight: 500, color: value ? 'text.primary' : 'text.disabled' }}>
-                {value || '—'}
-              </Typography>
-            </Grid>
-          ))}
-        </Grid>
-      </Box>
-    </Paper>
-  );
-}
+function ReviewStep({ form, onEdit }: { form: FormData; onEdit: (step: number) => void }) {
+  const { t } = useLanguage();
+  const personalItems = [
+    { key: t('labelFullName'), value: form.fullName || t('notProvided') },
+    { key: t('labelAge'), value: form.age || t('notProvided') },
+    { key: t('labelDistrict'), value: form.district || t('notProvided') },
+    { key: t('labelGender'), value: form.gender || t('notProvided') },
+  ];
+  const eduItems = [
+    { key: t('labelEducationLevel'), value: form.educationLevel || t('notProvided') },
+    { key: t('labelCourse'), value: form.course || t('notProvided') },
+    { key: t('labelYearOfStudy'), value: form.yearOfStudy || t('notProvided') },
+    { key: t('labelCollegeType'), value: form.collegeType || t('notProvided') },
+    { key: t('labelCollegeName'), value: form.collegeName || t('notProvided') },
+  ];
+  const financialItems = [
+    { key: t('labelIncome'), value: form.annualIncome ? `₹${parseFloat(form.annualIncome).toLocaleString()}` : t('notProvided') },
+    { key: t('labelCommunity'), value: form.community || t('notProvided') },
+    { key: t('labelFirstGraduate'), value: form.firstGraduate ? t('boolYes') : t('boolNo') },
+  ];
 
-function ReviewStep({ form, goToStep }: { form: FormData; goToStep: (n: number) => void }) {
   return (
     <Box>
-      <Typography variant="h5" sx={{ mb: 0.5 }}>Review Your Details</Typography>
-      <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3 }}>
-        Please confirm all information before starting your eligibility check.
-      </Typography>
-      <ReviewSection
-        label="Personal Details"
-        onEdit={() => goToStep(0)}
-        items={[
-          { key: 'Full Name', value: form.fullName },
-          { key: 'Age', value: form.age },
-          { key: 'Gender', value: form.gender },
-          { key: 'District', value: form.district },
-        ]}
-      />
-      <ReviewSection
-        label="Education Details"
-        onEdit={() => goToStep(1)}
-        items={[
-          { key: 'Education Level', value: form.educationLevel },
-          { key: 'Course', value: form.course },
-          { key: 'Year of Study', value: form.yearOfStudy ? `Year ${form.yearOfStudy}` : '' },
-          { key: 'College Type', value: form.collegeType },
-          { key: 'College Name', value: form.collegeName },
-          { key: 'School Background', value: form.schoolBackground },
-        ]}
-      />
-      <ReviewSection
-        label="Financial Details"
-        onEdit={() => goToStep(2)}
-        items={[
-          { key: 'Annual Family Income', value: form.annualIncome ? `₹${Number(form.annualIncome).toLocaleString('en-IN')}` : '' },
-        ]}
-      />
-      <ReviewSection
-        label="Additional Eligibility Details"
-        onEdit={() => goToStep(3)}
-        items={[
-          { key: 'Community', value: form.community.toUpperCase() },
-          { key: 'Disability Status', value: form.disabilityStatus },
-          { key: 'First Graduate', value: form.firstGraduate ? 'Yes' : 'No' },
-          { key: 'Special Category', value: form.specialCategory.join(', ') || 'None' },
-        ]}
-      />
+      <SectionHeading>{t('stepReview')}</SectionHeading>
+      <Grid container spacing={3}>
+        {[
+          { title: t('stepPersonal'), items: personalItems, stepIndex: 0 },
+          { title: t('stepEducation'), items: eduItems, stepIndex: 1 },
+          { title: t('stepFinancial'), items: financialItems, stepIndex: 2 },
+        ].map((sec) => (
+          <Grid size={{ xs: 12 }} key={sec.title}>
+            <Paper variant="outlined" sx={{ p: 2, borderRadius: 1.5 }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 1 }}>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700, color: 'primary.main' }}>
+                  {sec.title}
+                </Typography>
+                <Button size="small" startIcon={<EditOutlinedIcon />} onClick={() => onEdit(sec.stepIndex)}>
+                  {t('editBtn')}
+                </Button>
+              </Box>
+              <Grid container spacing={1}>
+                {sec.items.map((it) => (
+                  <Grid size={{ xs: 12, sm: 6 }} key={it.key}>
+                    <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block' }}>
+                      {it.key}
+                    </Typography>
+                    <Typography variant="body2" sx={{ fontWeight: 600 }}>
+                      {it.value}
+                    </Typography>
+                  </Grid>
+                ))}
+              </Grid>
+            </Paper>
+          </Grid>
+        ))}
+      </Grid>
     </Box>
   );
 }
@@ -451,118 +401,114 @@ function ReviewStep({ form, goToStep }: { form: FormData; goToStep: (n: number) 
 export default function EligibilityFormPage() {
   const [step, setStep] = useState(0);
   const [form, setForm] = useState<FormData>(initialForm);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setProfile } = useEligibility();
+  const { setProfile, fetchRecommendations } = useEligibility();
+  const { t } = useLanguage();
 
-  const next = () => setStep((s) => Math.min(s + 1, steps.length - 1));
+  const next = () => setStep((s) => Math.min(s + 1, 3));
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
-  const handleStart = () => {
-    const genderMap: Record<string, 'male'|'female'|'other'> = {
+  const handleSubmit = async () => {
+    setLoading(true);
+    const genderMap: Record<string, 'male' | 'female' | 'other'> = {
       male: 'male',
-      female: 'female'
+      female: 'female',
     };
-    const categoryMap: Record<string, 'SC'|'ST'|'MBC'|'BC'|'OBC'|'OC'> = {
+    const categoryMap: Record<string, 'SC' | 'ST' | 'MBC' | 'BC' | 'OBC' | 'OC'> = {
       sc: 'SC', st: 'ST', mbc: 'MBC', bc: 'BC', obc: 'OBC', minority: 'BC', general: 'OC'
     };
-    const courseLevelMap: Record<string, 'UG'|'PG'|'DIPLOMA'|'PHD'> = {
+    const courseLevelMap: Record<string, 'UG' | 'PG' | 'DIPLOMA' | 'PHD'> = {
       ug: 'UG', pg: 'PG', diploma: 'DIPLOMA', phd: 'PHD', professional: 'UG'
     };
-    const collegeTypeMap: Record<string, 'government'|'aided'|'private'> = {
-      govt: 'government', 'govt-aided': 'aided', private: 'private', deemed: 'private', central: 'government'
+    const collegeTypeMap: Record<string, 'government' | 'aided' | 'private'> = {
+      govt: 'government', 'govt-aided': 'aided', private: 'private'
     };
 
     const isDisability = form.disabilityStatus !== 'none' && form.disabilityStatus !== '';
 
     const studentProfile: StudentProfile = {
-      name: form.fullName,
+      name: form.fullName || 'Student',
       age: parseInt(form.age) || 20,
       gender: genderMap[form.gender] || 'other',
       category: categoryMap[form.community] || 'OC',
       annual_family_income: parseFloat(form.annualIncome) || 0,
-      marks_percentage: 75,
+      marks_percentage: 85,
       year_of_study: parseInt(form.yearOfStudy) || 1,
       course: form.course || 'B.E',
       course_level: courseLevelMap[form.educationLevel] || 'UG',
       college_type: collegeTypeMap[form.collegeType] || 'private',
-      government_school_background: form.schoolBackground === 'govt-school' || form.schoolBackground === 'govt-aided-school',
+      government_school_background: form.schoolBackground === 'govt-school',
       disability: isDisability,
-      disability_percentage: isDisability ? 40 : 0,
+      disability_percentage: isDisability ? 50 : 0,
       minority: form.community === 'minority',
       first_graduate: form.firstGraduate,
       district: form.district || 'Chennai',
       state: 'Tamil Nadu'
     };
-    
-    setProfile(studentProfile);
-    navigate('/analysis');
+
+    try {
+      setProfile(studentProfile);
+      await fetchRecommendations(studentProfile);
+      navigate('/results');
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: { xs: 3, md: 5 } }}>
+    <Box sx={{ bgcolor: 'background.default', minHeight: '80vh', py: 4 }}>
       <Container maxWidth="md">
-        <Box sx={{ mb: 3 }}>
-          <Chip
-            label="ELIGIBILITY CHECK"
-            size="small"
-            sx={{ bgcolor: '#e8eef7', color: 'primary.main', fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.06em', borderRadius: 1, mb: 1.5 }}
-          />
-          <Typography variant="h4" sx={{ mb: 0.5 }}>Check Your Eligibility</Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-            Complete the form below to find eligible schemes and scholarships.
-          </Typography>
-        </Box>
+        <Typography variant="h4" sx={{ fontWeight: 800, color: 'primary.main', mb: 1 }}>
+          {t('formTitle')}
+        </Typography>
+        <Typography variant="body1" sx={{ color: 'text.secondary', mb: 3 }}>
+          {t('formSubtitle')}
+        </Typography>
 
-        <Paper elevation={0} sx={{ p: { xs: 2.5, md: 4 }, border: '1px solid', borderColor: 'divider' }}>
+        <Paper elevation={0} sx={{ p: { xs: 2, md: 4 }, borderRadius: 2, border: '1px solid', borderColor: 'divider' }}>
           <StepIndicator current={step} />
 
           {step === 0 && <PersonalStep form={form} setForm={setForm} />}
           {step === 1 && <EducationStep form={form} setForm={setForm} />}
           {step === 2 && <FinancialStep form={form} setForm={setForm} />}
-          {step === 3 && <AdditionalStep form={form} setForm={setForm} />}
-          {step === 4 && <ReviewStep form={form} goToStep={setStep} />}
+          {step === 3 && <ReviewStep form={form} onEdit={setStep} />}
 
           <Divider sx={{ my: 3 }} />
 
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <Button
-              variant="outlined"
-              startIcon={<ArrowBackIcon />}
-              onClick={back}
               disabled={step === 0}
+              onClick={back}
+              startIcon={<ArrowBackIcon />}
               sx={{ fontWeight: 600 }}
             >
-              Back
+              {t('back')}
             </Button>
-            {step < steps.length - 1 ? (
+
+            {step < 3 ? (
               <Button
                 variant="contained"
-                color="primary"
-                endIcon={<ArrowForwardIcon />}
                 onClick={next}
+                endIcon={<ArrowForwardIcon />}
                 sx={{ fontWeight: 700, px: 3 }}
               >
-                Save &amp; Continue
+                {t('next')}
               </Button>
             ) : (
               <Button
                 variant="contained"
                 color="secondary"
-                size="large"
-                endIcon={<ArrowForwardIcon />}
-                onClick={handleStart}
-                sx={{ fontWeight: 700, px: 3 }}
+                onClick={handleSubmit}
+                disabled={loading}
+                startIcon={<LockOutlinedIcon />}
+                sx={{ fontWeight: 700, px: 3, py: 1.25 }}
               >
-                Start Eligibility Check
+                {loading ? t('loading') : t('btnCheckNow')}
               </Button>
             )}
-          </Box>
-
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75, mt: 2.5 }}>
-            <LockOutlinedIcon sx={{ fontSize: 14, color: 'text.disabled' }} />
-            <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-              Your information is used only to determine relevant scheme eligibility.
-            </Typography>
           </Box>
         </Paper>
       </Container>

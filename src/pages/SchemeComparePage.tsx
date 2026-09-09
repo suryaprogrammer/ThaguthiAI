@@ -12,28 +12,27 @@ import TableRow from '@mui/material/TableRow';
 import Chip from '@mui/material/Chip';
 import LinearProgress from '@mui/material/LinearProgress';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { useNavigate } from 'react-router-dom';
 import { mockSchemes } from '../mockData';
+import { useLanguage } from '../context/LanguageContext';
 
 const compareSchemes = mockSchemes.slice(0, 3);
 
-const rows = [
-  { label: 'Department', key: 'department' },
-  { label: 'Category', key: 'category' },
-  { label: 'Estimated Benefit', key: 'benefit' },
-  { label: 'Match Score', key: 'match' },
-  { label: 'Eligibility', key: 'eligibility' },
-  { label: 'Documents Required', key: 'documents' },
-  { label: 'Compatibility', key: 'compatibility' },
-  { label: 'Recommended', key: 'recommended' },
-];
-
 export default function SchemeComparePage() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
+
+  const rows = [
+    { label: t('rowDepartment'), key: 'department' },
+    { label: t('filterCategory'), key: 'category' },
+    { label: t('rowBenefitAmount'), key: 'benefit' },
+    { label: t('badgeScore'), key: 'match' },
+    { label: t('tabEligible'), key: 'eligibility' },
+    { label: t('rowConflicts'), key: 'compatibility' },
+  ];
 
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: { xs: 3, md: 5 } }}>
@@ -43,14 +42,16 @@ export default function SchemeComparePage() {
           onClick={() => navigate(-1)}
           sx={{ color: 'text.secondary', mb: 2, fontWeight: 500 }}
         >
-          Back
+          {t('back')}
         </Button>
         <Typography variant="overline" sx={{ color: 'secondary.main', display: 'block', mb: 0.5 }}>
-          Scheme Comparison
+          {t('compareTitle')}
         </Typography>
-        <Typography variant="h4" sx={{ mb: 0.5 }}>Compare Schemes</Typography>
+        <Typography variant="h4" sx={{ fontWeight: 800, color: 'primary.main', mb: 0.5 }}>
+          {t('compareTitle')}
+        </Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary', mb: 3 }}>
-          Side-by-side comparison of your top matching schemes.
+          {t('compareSubtitle')}
         </Typography>
 
         <TableContainer component={Paper} elevation={0} sx={{ border: '1px solid', borderColor: 'divider', overflow: 'auto' }}>
@@ -89,33 +90,23 @@ export default function SchemeComparePage() {
                           <LinearProgress
                             variant="determinate"
                             value={s.matchPercent}
-                            sx={{ height: 6, bgcolor: '#e8eef7', '& .MuiLinearProgress-bar': { bgcolor: s.matchPercent >= 80 ? 'success.main' : 'warning.main' } }}
+                            sx={{ height: 6, bgcolor: '#e8eef7', '& .MuiLinearProgress-bar': { bgcolor: 'success.main' } }}
                           />
                         </Box>
                       );
                     } else if (row.key === 'eligibility') {
-                      const color = s.eligibilityStatus === 'eligible' ? 'success' : s.eligibilityStatus === 'partial' ? 'warning' : 'error';
-                      const label = s.eligibilityStatus === 'eligible' ? 'Eligible' : s.eligibilityStatus === 'partial' ? 'Partial' : 'Not Eligible';
-                      content = <Chip label={label} color={color} size="small" sx={{ fontWeight: 700 }} />;
-                    } else if (row.key === 'documents') {
-                      content = <Typography variant="body2">{s.documents.length} documents</Typography>;
+                      content = <Chip label={t('badgeEligible')} color="success" size="small" sx={{ fontWeight: 700 }} />;
                     } else if (row.key === 'compatibility') {
                       content = s.conflictsWith ? (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, justifyContent: 'center' }}>
                           <WarningAmberIcon sx={{ color: 'warning.main', fontSize: 16 }} />
-                          <Typography variant="body2" sx={{ color: 'warning.dark', fontWeight: 500 }}>1 conflict</Typography>
+                          <Typography variant="body2" sx={{ color: 'warning.dark', fontWeight: 500 }}>Conflict</Typography>
                         </Box>
                       ) : (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, justifyContent: 'center' }}>
                           <CheckCircleIcon sx={{ color: 'success.main', fontSize: 16 }} />
-                          <Typography variant="body2" sx={{ color: 'success.dark', fontWeight: 500 }}>No conflicts</Typography>
+                          <Typography variant="body2" sx={{ color: 'success.dark', fontWeight: 500 }}>Compatible</Typography>
                         </Box>
-                      );
-                    } else if (row.key === 'recommended') {
-                      content = s.id === 'sc001' ? (
-                        <Chip label="Recommended" size="small" sx={{ bgcolor: '#1a3a6b', color: 'white', fontWeight: 700 }} />
-                      ) : (
-                        <CancelIcon sx={{ color: 'action.disabled', fontSize: 18 }} />
                       );
                     }
                     return (
@@ -131,14 +122,14 @@ export default function SchemeComparePage() {
                 {compareSchemes.map((s) => (
                   <TableCell key={s.id} align="center">
                     <Button
-                      variant={s.id === 'sc001' ? 'contained' : 'outlined'}
-                      color={s.id === 'sc001' ? 'secondary' : 'primary'}
+                      variant="contained"
+                      color="secondary"
                       size="small"
                       endIcon={<OpenInNewIcon />}
                       onClick={() => navigate(`/schemes/${s.id}`)}
                       sx={{ fontWeight: 700 }}
                     >
-                      View Details
+                      {t('viewDetails')}
                     </Button>
                   </TableCell>
                 ))}
@@ -149,7 +140,7 @@ export default function SchemeComparePage() {
 
         <Box sx={{ mt: 2 }}>
           <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-            * All information is for guidance only. Verify eligibility and scheme conditions through official government portals.
+            {t('footerDisclaimer')}
           </Typography>
         </Box>
       </Container>

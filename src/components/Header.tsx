@@ -18,14 +18,7 @@ import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 import LanguageIcon from '@mui/icons-material/Language';
 import { useNavigate, useLocation } from 'react-router-dom';
-
-const navLinks = [
-  { label: 'Home', path: '/' },
-  { label: 'How It Works', path: '/#how-it-works' },
-  { label: 'Schemes', path: '/schemes' },
-  { label: 'Help', path: '/#help' },
-  { label: 'About', path: '/#about' },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Header() {
   const theme = useTheme();
@@ -33,6 +26,15 @@ export default function Header() {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const { language, setLanguage, t } = useLanguage();
+
+  const navLinks = [
+    { label: t('navHome'), path: '/' },
+    { label: t('navCheckEligibility'), path: '/check-eligibility' },
+    { label: t('navDirectory'), path: '/schemes' },
+    { label: t('navCompare'), path: '/schemes/compare' },
+    { label: t('navAnalytics'), path: '/analysis' },
+  ];
 
   const handleNav = (path: string) => {
     setDrawerOpen(false);
@@ -62,7 +64,9 @@ export default function Header() {
         }}
       >
         <Typography variant="caption" sx={{ letterSpacing: '0.03em', opacity: 0.9 }}>
-          Student Scholarship &amp; Government Scheme Eligibility Assistant &nbsp;|&nbsp; For guidance only — verify through official portals before applying
+          {language === 'ta'
+            ? 'தமிழ்நாடு மாணவர்கள் கல்வி உதவித்தொகை தகுதி வழிகாட்டி  |  தகவல் நோக்கங்களுக்காக மட்டுமே'
+            : 'Student Scholarship & Government Scheme Eligibility Assistant  |  For guidance only — verify through official portals before applying'}
         </Typography>
       </Box>
 
@@ -102,10 +106,10 @@ export default function Header() {
                 variant="h6"
                 sx={{ fontWeight: 800, color: 'primary.main', lineHeight: 1.1, letterSpacing: '-0.01em', fontSize: '1.125rem' }}
               >
-                THAGUTHI<span style={{ color: '#c0392b' }}>AI</span>
+                {t('appTitle')}<span style={{ color: '#c0392b' }}>AI</span>
               </Typography>
               <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: '0.65rem', display: 'block', lineHeight: 1 }}>
-                Know what you're eligible for.
+                {t('appTagline')}
               </Typography>
             </Box>
           </Box>
@@ -115,7 +119,7 @@ export default function Header() {
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5, ml: 4 }}>
               {navLinks.map((link) => (
                 <Button
-                  key={link.label}
+                  key={link.path}
                   onClick={() => handleNav(link.path)}
                   sx={{
                     color: location.pathname === link.path ? 'primary.main' : 'text.secondary',
@@ -141,14 +145,26 @@ export default function Header() {
               <LanguageIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
               <Button
                 size="small"
-                sx={{ fontSize: '0.8rem', color: 'text.secondary', minWidth: 'auto', px: 0.75, py: 0.25 }}
+                onClick={() => setLanguage('ta')}
+                sx={{
+                  fontSize: '0.8rem',
+                  color: language === 'ta' ? 'primary.main' : 'text.secondary',
+                  fontWeight: language === 'ta' ? 700 : 400,
+                  minWidth: 'auto', px: 0.75, py: 0.25
+                }}
               >
                 தமிழ்
               </Button>
               <Typography variant="caption" sx={{ color: 'text.disabled' }}>|</Typography>
               <Button
                 size="small"
-                sx={{ fontSize: '0.8rem', color: 'primary.main', fontWeight: 600, minWidth: 'auto', px: 0.75, py: 0.25 }}
+                onClick={() => setLanguage('en')}
+                sx={{
+                  fontSize: '0.8rem',
+                  color: language === 'en' ? 'primary.main' : 'text.secondary',
+                  fontWeight: language === 'en' ? 700 : 400,
+                  minWidth: 'auto', px: 0.75, py: 0.25
+                }}
               >
                 English
               </Button>
@@ -163,7 +179,7 @@ export default function Header() {
               onClick={() => navigate('/check-eligibility')}
               sx={{ fontWeight: 700, px: 2.5, py: 1, fontSize: '0.875rem' }}
             >
-              Check Eligibility
+              {t('btnCheckNow')}
             </Button>
           )}
 
@@ -181,7 +197,7 @@ export default function Header() {
         <Box sx={{ width: 280, pt: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 2, pb: 1 }}>
             <Typography variant="h6" sx={{ fontWeight: 800, color: 'primary.main' }}>
-              THAGUTHI<span style={{ color: '#c0392b' }}>AI</span>
+              {t('appTitle')}<span style={{ color: '#c0392b' }}>AI</span>
             </Typography>
             <IconButton onClick={() => setDrawerOpen(false)}>
               <CloseIcon />
@@ -190,7 +206,7 @@ export default function Header() {
           <Divider />
           <List>
             {navLinks.map((link) => (
-              <ListItem key={link.label} disablePadding>
+              <ListItem key={link.path} disablePadding>
                 <ListItemButton onClick={() => handleNav(link.path)}>
                   <ListItemText primary={link.label} primaryTypographyProps={{ fontWeight: 500 }} />
                 </ListItemButton>
@@ -206,12 +222,32 @@ export default function Header() {
               onClick={() => { setDrawerOpen(false); navigate('/check-eligibility'); }}
               sx={{ fontWeight: 700, py: 1.25 }}
             >
-              Check Eligibility
+              {t('btnCheckNow')}
             </Button>
             <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mt: 1.5 }}>
-              <Button size="small" sx={{ fontSize: '0.8rem', color: 'text.secondary' }}>தமிழ்</Button>
+              <Button
+                size="small"
+                onClick={() => setLanguage('ta')}
+                sx={{
+                  fontSize: '0.8rem',
+                  color: language === 'ta' ? 'primary.main' : 'text.secondary',
+                  fontWeight: language === 'ta' ? 700 : 400
+                }}
+              >
+                தமிழ்
+              </Button>
               <Typography variant="caption" sx={{ color: 'text.disabled', alignSelf: 'center' }}>|</Typography>
-              <Button size="small" sx={{ fontSize: '0.8rem', color: 'primary.main', fontWeight: 600 }}>English</Button>
+              <Button
+                size="small"
+                onClick={() => setLanguage('en')}
+                sx={{
+                  fontSize: '0.8rem',
+                  color: language === 'en' ? 'primary.main' : 'text.secondary',
+                  fontWeight: language === 'en' ? 700 : 400
+                }}
+              >
+                English
+              </Button>
             </Box>
           </Box>
         </Box>

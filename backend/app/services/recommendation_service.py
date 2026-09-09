@@ -39,7 +39,7 @@ class RecommendationService:
         eligible_ids = [s.scheme_id for s in elig_result.eligible_schemes]
         conflict_result = self.conflict_service.check_conflicts(eligible_ids)
         
-        # Step 3: Score and rank eligible schemes
+        # Step 3: Score and rank eligible schemes (strictly eligible ones only)
         scored_schemes = self._score_schemes(elig_result.eligible_schemes, student)
         
         # Step 4: Find best non-conflicting combination
@@ -66,6 +66,10 @@ class RecommendationService:
         """Score and rank eligible schemes."""
         scored = []
         for scheme_result in eligible_schemes:
+            # STRICT GUARANTEE: Never score or recommend ineligible schemes
+            if not scheme_result.eligible:
+                continue
+                
             scheme_data = self.eligibility_service.get_scheme_by_id(scheme_result.scheme_id)
             if not scheme_data:
                 continue

@@ -14,6 +14,7 @@ class SchemeEligibility(BaseModel):
     course_types: List[str] = []
     college_types: List[str] = []
     disability_required: Optional[bool] = None
+    min_disability_percentage: Optional[float] = None
     minority_required: Optional[bool] = None
     first_graduate_required: Optional[bool] = None
 

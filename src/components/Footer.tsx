@@ -6,12 +6,12 @@ import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
 import { useNavigate } from 'react-router-dom';
-
-const quickLinks = ['How It Works', 'Schemes', 'Help', 'About'];
-const legalLinks = ['Privacy', 'Accessibility', 'Disclaimer', 'Contact'];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function Footer() {
   const navigate = useNavigate();
+  const { t } = useLanguage();
+
   return (
     <Box
       component="footer"
@@ -41,51 +41,56 @@ export default function Footer() {
                 <VerifiedOutlinedIcon sx={{ color: 'white', fontSize: 20 }} />
               </Box>
               <Typography variant="h6" sx={{ fontWeight: 800, color: 'white', letterSpacing: '-0.01em' }}>
-                THAGUTHI<span style={{ color: '#e74c3c' }}>AI</span>
+                {t('appTitle')}<span style={{ color: '#e74c3c' }}>AI</span>
               </Typography>
             </Box>
             <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 2, maxWidth: 360, lineHeight: 1.7 }}>
-              "Know what you're eligible for."
+              "{t('appTagline')}"
             </Typography>
             <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.55)', fontSize: '0.8rem', lineHeight: 1.8 }}>
-              ThaguthiAI is a student-focused eligibility assistance interface.
-              Always verify scheme conditions through the official government
-              source before applying.
+              {t('footerAboutDesc')}
             </Typography>
           </Grid>
 
           <Grid size={{ xs: 6, md: 3 }}>
             <Typography variant="overline" sx={{ color: 'rgba(255,255,255,0.5)', mb: 1.5, display: 'block' }}>
-              Quick Links
+              {t('footerQuickLinks')}
             </Typography>
-            {quickLinks.map((l) => (
-              <Box key={l} sx={{ mb: 0.75 }}>
-                <Link
-                  component="button"
-                  onClick={() => { if (l === 'Schemes') navigate('/schemes'); }}
-                  underline="hover"
-                  sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', cursor: 'pointer', background: 'none', border: 'none', p: 0 }}
-                >
-                  {l}
-                </Link>
-              </Box>
-            ))}
+            <Box sx={{ mb: 0.75 }}>
+              <Link onClick={() => navigate('/')} underline="hover" sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', cursor: 'pointer' }}>
+                {t('navHome')}
+              </Link>
+            </Box>
+            <Box sx={{ mb: 0.75 }}>
+              <Link onClick={() => navigate('/check-eligibility')} underline="hover" sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', cursor: 'pointer' }}>
+                {t('navCheckEligibility')}
+              </Link>
+            </Box>
+            <Box sx={{ mb: 0.75 }}>
+              <Link onClick={() => navigate('/schemes')} underline="hover" sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', cursor: 'pointer' }}>
+                {t('navDirectory')}
+              </Link>
+            </Box>
+            <Box sx={{ mb: 0.75 }}>
+              <Link onClick={() => navigate('/schemes/compare')} underline="hover" sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', cursor: 'pointer' }}>
+                {t('navCompare')}
+              </Link>
+            </Box>
           </Grid>
 
           <Grid size={{ xs: 6, md: 4 }}>
             <Typography variant="overline" sx={{ color: 'rgba(255,255,255,0.5)', mb: 1.5, display: 'block' }}>
-              Information
+              {t('footerHelplineTitle')}
             </Typography>
-            {legalLinks.map((l) => (
-              <Box key={l} sx={{ mb: 0.75 }}>
-                <Link
-                  underline="hover"
-                  sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', cursor: 'pointer' }}
-                >
-                  {l}
-                </Link>
-              </Box>
-            ))}
+            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', mb: 0.75 }}>
+              {t('footerHelpline1')}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', mb: 0.75 }}>
+              {t('footerHelpline2')}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.75)', fontSize: '0.875rem', mb: 0.75 }}>
+              {t('footerHelpline3')}
+            </Typography>
           </Grid>
         </Grid>
 
@@ -93,10 +98,10 @@ export default function Footer() {
 
         <Box sx={{ display: 'flex', flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'space-between', alignItems: { sm: 'center' }, gap: 1 }}>
           <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.4)' }}>
-            © 2025 ThaguthiAI. For guidance purposes only. All scheme information must be verified through official sources.
+            {t('footerDisclaimer')}
           </Typography>
           <Typography variant="caption" sx={{ color: 'rgba(255,255,255,0.4)' }}>
-            Tamil Nadu Student Benefit Discovery
+            {t('footerCopyright')}
           </Typography>
         </Box>
       </Container>

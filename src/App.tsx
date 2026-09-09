@@ -13,6 +13,7 @@ import SchemeDetailsPage from './pages/SchemeDetailsPage';
 import SchemesDirectoryPage from './pages/SchemesDirectoryPage';
 import SchemeComparePage from './pages/SchemeComparePage';
 import { EligibilityProvider } from './context/EligibilityContext';
+import { LanguageProvider } from './context/LanguageContext';
 
 function Layout({ children, hideFooter }: { children: React.ReactNode; hideFooter?: boolean }) {
   return (
@@ -30,22 +31,23 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
-        <EligibilityProvider>
-          <Routes>
-            <Route path="/" element={<Layout><LandingPage /></Layout>} />
-            <Route path="/check-eligibility" element={<Layout><EligibilityFormPage /></Layout>} />
-            <Route path="/analysis" element={<Layout hideFooter><AnalysisPage /></Layout>} />
-            <Route path="/results" element={<Layout><ResultsPage /></Layout>} />
-            <Route path="/schemes" element={<Layout><SchemesDirectoryPage /></Layout>} />
-            <Route path="/schemes/compare" element={<Layout><SchemeComparePage /></Layout>} />
-            <Route path="/schemes/:id" element={<Layout><SchemeDetailsPage /></Layout>} />
-          </Routes>
-        </EligibilityProvider>
-      </BrowserRouter>
+      <LanguageProvider>
+        <BrowserRouter>
+          <EligibilityProvider>
+            <Routes>
+              <Route path="/" element={<Layout><LandingPage /></Layout>} />
+              <Route path="/check-eligibility" element={<Layout><EligibilityFormPage /></Layout>} />
+              <Route path="/analysis" element={<Layout hideFooter><AnalysisPage /></Layout>} />
+              <Route path="/results" element={<Layout><ResultsPage /></Layout>} />
+              <Route path="/schemes" element={<Layout><SchemesDirectoryPage /></Layout>} />
+              <Route path="/schemes/compare" element={<Layout><SchemeComparePage /></Layout>} />
+              <Route path="/schemes/:id" element={<Layout><SchemeDetailsPage /></Layout>} />
+            </Routes>
+          </EligibilityProvider>
+        </BrowserRouter>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }
 
 export default App;
-

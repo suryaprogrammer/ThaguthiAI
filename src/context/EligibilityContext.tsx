@@ -18,8 +18,6 @@ import {
   getSchemes,
 } from "../services/api";
 
-// ─── State shape ─────────────────────────────────────────────────
-
 interface EligibilityState {
   /** The student profile built by the form */
   profile: StudentProfile | null;
@@ -41,6 +39,8 @@ interface EligibilityContextValue extends EligibilityState {
   setProfile: (p: StudentProfile) => void;
   /** Run the full pipeline: recommendation + explanation */
   runAnalysis: (profile: StudentProfile) => Promise<void>;
+  /** Alias for runAnalysis */
+  fetchRecommendations: (profile: StudentProfile) => Promise<void>;
   /** Fetch AI explanation separately */
   fetchExplanation: () => Promise<void>;
   /** Fetch all schemes for the directory */
@@ -50,8 +50,6 @@ interface EligibilityContextValue extends EligibilityState {
 }
 
 const EligibilityContext = createContext<EligibilityContextValue | null>(null);
-
-// ─── Provider ────────────────────────────────────────────────────
 
 export function EligibilityProvider({ children }: { children: ReactNode }) {
   const [profile, setProfile] = useState<StudentProfile | null>(null);
@@ -163,6 +161,7 @@ export function EligibilityProvider({ children }: { children: ReactNode }) {
         error,
         setProfile,
         runAnalysis,
+        fetchRecommendations: runAnalysis,
         fetchExplanation,
         fetchSchemes,
         reset,
@@ -172,8 +171,6 @@ export function EligibilityProvider({ children }: { children: ReactNode }) {
     </EligibilityContext.Provider>
   );
 }
-
-// ─── Hook ────────────────────────────────────────────────────────
 
 export function useEligibility() {
   const ctx = useContext(EligibilityContext);

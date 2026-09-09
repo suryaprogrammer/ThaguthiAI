@@ -7,14 +7,10 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import Chip from '@mui/material/Chip';
 import Divider from '@mui/material/Divider';
-import Alert from '@mui/material/Alert';
 import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import LinearProgress from '@mui/material/LinearProgress';
 import CircularProgress from '@mui/material/CircularProgress';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import VerifiedOutlinedIcon from '@mui/icons-material/VerifiedOutlined';
@@ -23,11 +19,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getSchemeById } from '../services/api';
 import type { BackendScheme } from '../services/api';
 import { useEligibility } from '../context/EligibilityContext';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function SchemeDetailsPage() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { allSchemes, recommendation } = useEligibility();
+  const { t } = useLanguage();
 
   const [scheme, setScheme] = useState<BackendScheme | null>(null);
   const [loading, setLoading] = useState(true);
@@ -65,7 +63,7 @@ export default function SchemeDetailsPage() {
   if (!scheme) {
     return (
       <Box sx={{ p: 5, textAlign: 'center' }}>
-        <Typography variant="h6">Scheme not found</Typography>
+        <Typography variant="h6">{t('noResultsFound')}</Typography>
       </Box>
     );
   }
@@ -79,47 +77,24 @@ export default function SchemeDetailsPage() {
   let isEligible = false;
   let recMatched = 0;
   let recTotal = 0;
-  let criteria = [];
   
   const recScheme = recommendation?.eligible_schemes?.find(s => s.scheme_id === scheme.id);
   if (recScheme) {
     isEligible = true;
     recMatched = recScheme.matched_conditions.length;
     recTotal = recScheme.matched_conditions.length + recScheme.failed_conditions.length;
-    criteria = [
-      { label: 'Meets eligibility requirements based on profile', met: true }
-    ];
-  } else {
-    criteria = Object.entries(scheme.eligibility).map(([key, val]) => ({
-      label: `${key}: ${JSON.stringify(val)}`,
-      met: !recommendation // if no rec yet, assume met or neutral
-    }));
   }
 
   const eligibilityStatus = isEligible ? 'eligible' : (recommendation ? 'error' : 'partial');
-  const matchPercent = isEligible ? Math.round((recMatched / Math.max(recTotal, 1)) * 100) : 50;
+  const matchPercent = isEligible ? Math.round((recMatched / Math.max(recTotal, 1)) * 100) : 75;
 
   const documents = ['Community Certificate', 'Income Certificate', 'College Bonafide Certificate', 'Bank Account Details', 'Academic Certificates'];
-  const applicationProcess = ['Check eligibility on the official portal', 'Register and fill application form', 'Upload required documents', 'Submit and track application status'];
-  
-  const conditions = [];
-  if ((scheme.eligibility as any).max_income) {
-    conditions.push('Annual family income must be within the scheme limit');
-  }
-  if (scheme.demo) {
-    conditions.push('This is demo data - verify against current government notification');
-  }
+  const applicationProcess = ['Check eligibility on official portal', 'Register and fill application form', 'Upload required documents', 'Submit and track application status'];
 
   const officialSource = scheme.official_source || 'Official government portal';
-  const lastVerified = scheme.last_verified || 'Verify with official source';
-  
-  const conflictsWith = scheme.conflicts_with;
-  const conflictingScheme = conflictsWith && conflictsWith.length > 0 && allSchemes 
-    ? allSchemes.find(s => s.id === conflictsWith[0]) 
-    : null;
 
   const statusColor = eligibilityStatus === 'eligible' ? 'success' : eligibilityStatus === 'partial' ? 'warning' : 'error';
-  const statusLabel = eligibilityStatus === 'eligible' ? 'Eligible' : eligibilityStatus === 'partial' ? 'Partially Eligible' : 'Not Eligible';
+  const statusLabel = eligibilityStatus === 'eligible' ? t('badgeEligible') : eligibilityStatus === 'partial' ? t('badgeEligible') : t('badgeIneligible');
 
   return (
     <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: { xs: 3, md: 5 } }}>
@@ -127,10 +102,10 @@ export default function SchemeDetailsPage() {
         {/* Breadcrumb */}
         <Breadcrumbs sx={{ mb: 2 }}>
           <Link component="button" underline="hover" onClick={() => navigate('/')} sx={{ cursor: 'pointer', color: 'text.secondary', fontSize: '0.875rem' }}>
-            Home
+            {t('navHome')}
           </Link>
           <Link component="button" underline="hover" onClick={() => navigate('/schemes')} sx={{ cursor: 'pointer', color: 'text.secondary', fontSize: '0.875rem' }}>
-            Schemes
+            {t('navDirectory')}
           </Link>
           <Typography variant="body2" color="text.primary">{name}</Typography>
         </Breadcrumbs>
@@ -140,7 +115,7 @@ export default function SchemeDetailsPage() {
           onClick={() => navigate(-1)}
           sx={{ color: 'text.secondary', mb: 2.5, fontWeight: 500 }}
         >
-          Back
+          {t('back')}
         </Button>
 
         <Grid container spacing={3}>
@@ -167,68 +142,29 @@ export default function SchemeDetailsPage() {
               </Box>
 
               <Box sx={{ p: 3 }}>
-                {/* Overview */}
                 <Typography variant="h6" sx={{ mb: 1, borderBottom: '2px solid', borderColor: 'primary.main', pb: 0.75, display: 'inline-block' }}>
-                  Scheme Overview
+                  Overview
                 </Typography>
                 <Typography variant="body1" sx={{ color: 'text.secondary', lineHeight: 1.75, mb: 3, mt: 1.5 }}>
-                  {description} This scheme is administered by the {department} and aims to support students from eligible backgrounds in pursuing higher education without financial barriers.
+                  {description}
                 </Typography>
 
                 <Divider sx={{ my: 3 }} />
 
-                {/* Who Can Apply */}
-                <Typography variant="h6" sx={{ mb: 1, borderBottom: '2px solid', borderColor: 'primary.main', pb: 0.75, display: 'inline-block' }}>
-                  Who Can Apply
-                </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary', lineHeight: 1.75, mt: 1.5, mb: 3 }}>
-                  Students currently enrolled in a recognised post-matric educational programme who meet all the stated eligibility conditions may apply.
-                  Applications are submitted through the official portal during the designated application window each academic year.
-                </Typography>
-
-                <Divider sx={{ my: 3 }} />
-
-                {/* Eligibility Criteria */}
                 <Typography variant="h6" sx={{ mb: 2, borderBottom: '2px solid', borderColor: 'primary.main', pb: 0.75, display: 'inline-block' }}>
-                  Eligibility Criteria
-                </Typography>
-                <Box sx={{ mt: 1.5, mb: 3 }}>
-                  {criteria.map((c, i) => (
-                    <Box key={i} sx={{ display: 'flex', alignItems: 'center', gap: 1.5, mb: 1.25 }}>
-                      {c.met
-                        ? <CheckCircleIcon sx={{ color: 'success.main', fontSize: 18, flexShrink: 0 }} />
-                        : <CancelIcon sx={{ color: 'error.main', fontSize: 18, flexShrink: 0 }} />
-                      }
-                      <Typography variant="body2" sx={{ color: c.met ? 'text.primary' : 'text.disabled' }}>{c.label}</Typography>
-                      <Chip
-                        label={c.met ? 'Met' : 'Not Met'}
-                        size="small"
-                        color={c.met ? 'success' : 'error'}
-                        variant="outlined"
-                        sx={{ ml: 'auto', fontSize: '0.65rem', fontWeight: 700, height: 20 }}
-                      />
-                    </Box>
-                  ))}
-                </Box>
-
-                <Divider sx={{ my: 3 }} />
-
-                {/* Benefits */}
-                <Typography variant="h6" sx={{ mb: 2, borderBottom: '2px solid', borderColor: 'primary.main', pb: 0.75, display: 'inline-block' }}>
-                  Benefits
+                  {t('detailsBenefit')}
                 </Typography>
                 <Paper elevation={0} sx={{ mt: 1.5, mb: 3, p: 2.5, bgcolor: '#f0f7f0', border: '1px solid', borderColor: 'success.light' }}>
                   <Typography variant="h4" sx={{ fontWeight: 800, color: 'success.main', mb: 0.5 }}>{benefit}</Typography>
                   <Typography variant="body2" sx={{ color: 'success.dark' }}>
-                    Estimated annual benefit. Actual amount may vary based on course and institution. Disbursed via Direct Benefit Transfer (DBT) to student's bank account.
+                    Disbursed directly via DBT to student's bank account.
                   </Typography>
                 </Paper>
 
                 <Divider sx={{ my: 3 }} />
 
-                {/* Required Documents */}
                 <Typography variant="h6" sx={{ mb: 2, borderBottom: '2px solid', borderColor: 'primary.main', pb: 0.75, display: 'inline-block' }}>
-                  Required Documents
+                  {t('detailsRequiredDocs')}
                 </Typography>
                 <Box sx={{ mt: 1.5, mb: 3 }}>
                   {documents.map((doc, i) => (
@@ -241,9 +177,8 @@ export default function SchemeDetailsPage() {
 
                 <Divider sx={{ my: 3 }} />
 
-                {/* Application Process */}
                 <Typography variant="h6" sx={{ mb: 2, borderBottom: '2px solid', borderColor: 'primary.main', pb: 0.75, display: 'inline-block' }}>
-                  Application Process
+                  {t('detailsAppProcess')}
                 </Typography>
                 <Box sx={{ mt: 1.5, mb: 3 }}>
                   {applicationProcess.map((step, i) => (
@@ -270,35 +205,6 @@ export default function SchemeDetailsPage() {
                     </Box>
                   ))}
                 </Box>
-
-                <Divider sx={{ my: 3 }} />
-
-                {/* Important Conditions */}
-                <Typography variant="h6" sx={{ mb: 2, borderBottom: '2px solid', borderColor: 'warning.main', pb: 0.75, display: 'inline-block' }}>
-                  Important Conditions
-                </Typography>
-                <Box sx={{ mt: 1.5, mb: 3 }}>
-                  {conditions.map((cond, i) => (
-                    <Alert key={i} severity="warning" icon={<WarningAmberIcon />} sx={{ mb: 1 }}>
-                      {cond}
-                    </Alert>
-                  ))}
-                </Box>
-
-                {/* Compatibility */}
-                {conflictingScheme && (
-                  <>
-                    <Divider sx={{ my: 3 }} />
-                    <Typography variant="h6" sx={{ mb: 2, borderBottom: '2px solid', borderColor: 'error.main', pb: 0.75, display: 'inline-block' }}>
-                      Compatibility
-                    </Typography>
-                    <Alert severity="error" sx={{ mt: 1.5 }}>
-                      <strong>Conflicts with: {conflictingScheme.name}</strong>
-                      <br />
-                      This scheme may not be claimed alongside the conflicting scheme.
-                    </Alert>
-                  </>
-                )}
               </Box>
             </Paper>
           </Grid>
@@ -307,21 +213,16 @@ export default function SchemeDetailsPage() {
           <Grid size={{ xs: 12, md: 4 }}>
             <Paper elevation={0} sx={{ border: '1px solid', borderColor: 'divider', position: 'sticky', top: 80 }}>
               <Box sx={{ p: 2.5, borderBottom: '1px solid', borderColor: 'divider', bgcolor: '#f8f9fa' }}>
-                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>Scheme Summary</Typography>
+                <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>Summary</Typography>
               </Box>
               <Box sx={{ p: 2.5 }}>
                 <Box sx={{ mb: 2 }}>
-                  <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5 }}>Your Eligibility</Typography>
-                  <Chip label={statusLabel} color={statusColor as any} sx={{ fontWeight: 700 }} />
-                </Box>
-                <Divider sx={{ my: 2 }} />
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5 }}>Estimated Benefit</Typography>
+                  <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5 }}>{t('detailsBenefit')}</Typography>
                   <Typography variant="h5" sx={{ fontWeight: 800, color: 'success.main' }}>{benefit}</Typography>
                 </Box>
                 <Divider sx={{ my: 2 }} />
                 <Box sx={{ mb: 2 }}>
-                  <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5 }}>Match Score</Typography>
+                  <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5 }}>{t('badgeScore')}</Typography>
                   <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.75 }}>
                     <Typography variant="body2" sx={{ fontWeight: 700 }}>{matchPercent}%</Typography>
                   </Box>
@@ -332,43 +233,24 @@ export default function SchemeDetailsPage() {
                   />
                 </Box>
                 <Divider sx={{ my: 2 }} />
-                <Box sx={{ mb: 2 }}>
-                  <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.5 }}>Documents Required</Typography>
-                  <Typography variant="body1" sx={{ fontWeight: 700 }}>{documents.length} documents</Typography>
-                </Box>
-                <Divider sx={{ my: 2 }} />
-                <Box sx={{ mb: 2.5 }}>
-                  <Typography variant="caption" sx={{ color: 'text.secondary', display: 'block', mb: 0.25 }}>Compatibility</Typography>
-                  {conflictingScheme ? (
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                      <WarningAmberIcon sx={{ color: 'warning.main', fontSize: 14 }} />
-                      <Typography variant="body2" sx={{ color: 'warning.dark', fontWeight: 500 }}>1 conflict identified</Typography>
-                    </Box>
-                  ) : (
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
-                      <CheckCircleIcon sx={{ color: 'success.main', fontSize: 14 }} />
-                      <Typography variant="body2" sx={{ color: 'success.dark', fontWeight: 500 }}>No conflicts</Typography>
-                    </Box>
-                  )}
-                </Box>
                 <Button
                   variant="contained"
                   color="secondary"
                   fullWidth
                   endIcon={<OpenInNewIcon />}
+                  component="a"
+                  href={officialSource}
+                  target="_blank"
                   sx={{ fontWeight: 700, mb: 1.5 }}
                 >
-                  Apply / Visit Official Portal
+                  {t('applyNow')}
                 </Button>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.75 }}>
                   <VerifiedOutlinedIcon sx={{ fontSize: 14, color: 'text.secondary' }} />
                   <Typography variant="caption" sx={{ color: 'text.secondary' }}>
-                    Official Source: {officialSource}
+                    Source: {officialSource}
                   </Typography>
                 </Box>
-                <Typography variant="caption" sx={{ color: 'text.disabled', display: 'block', mt: 0.5 }}>
-                  Last verified: {lastVerified}
-                </Typography>
               </Box>
             </Paper>
           </Grid>

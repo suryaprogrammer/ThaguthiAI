@@ -34,7 +34,12 @@ class StudentProfile(BaseModel):
     @field_validator('category')
     @classmethod
     def validate_category(cls, v: str) -> str:
-        return v.upper()
+        if not v:
+            return 'OC'
+        cleaned = v.strip().upper()
+        if cleaned in ('MBC/DNC', 'MBC_DNC', 'MBC-DNC', 'MBC DNC', 'MBC & DNC', 'MBC AND DNC'):
+            return 'MBC/DNC'
+        return cleaned
 
     @field_validator('course_level')
     @classmethod

@@ -3,7 +3,7 @@
     "id": "bc_mbc_scholarship",
     "name": "BC/MBC Post-Matric Scholarship (Demo)",
     "department": "Backward Classes and Minorities Welfare Department",
-    "description": "Financial assistance for BC/MBC students to pursue post-matriculation courses.",
+    "description": "Financial assistance for BC/MBC/DNC students to pursue post-matriculation courses.",
     "benefit": "Yearly scholarship amount credited directly to bank account.",
     "benefit_amount": 12000.0,
     "frequency": "annual",
@@ -14,26 +14,45 @@
       "max_income": 200000.0,
       "education_levels": ["UG", "PG", "Diploma"]
     },
-    "conflicts_with": ["sc_st_scholarship", "minority_scholarship"],
+    "conflicts_with": ["sc_scholarship", "st_scholarship", "minority_scholarship"],
     "official_source": "https://www.bcmbcmw.tn.gov.in/",
     "last_verified": "2023-10-01"
   },
   {
-    "id": "sc_st_scholarship",
-    "name": "SC/ST Post-Matric Scholarship (Demo)",
-    "department": "Adi Dravidar and Tribal Welfare Department",
-    "description": "Financial assistance for SC/ST students for higher education.",
+    "id": "sc_scholarship",
+    "name": "SC Post-Matric Scholarship (Demo)",
+    "department": "Adi Dravidar Welfare Department",
+    "description": "Financial assistance for SC students for higher education.",
     "benefit": "Yearly scholarship covering tuition and maintenance.",
     "benefit_amount": 15000.0,
     "frequency": "annual",
     "demo": true,
     "data_status": "sample/demo - verify against current government notification",
     "eligibility": {
-      "categories": ["SC", "ST", "SCA"],
+      "categories": ["SC", "SCA"],
       "max_income": 250000.0,
       "education_levels": ["UG", "PG", "Diploma", "PhD"]
     },
-    "conflicts_with": ["bc_mbc_scholarship"],
+    "conflicts_with": ["st_scholarship", "bc_mbc_scholarship", "minority_scholarship"],
+    "official_source": "https://www.adwelfare.tn.gov.in/",
+    "last_verified": "2023-10-01"
+  },
+  {
+    "id": "st_scholarship",
+    "name": "ST Post-Matric Scholarship (Demo)",
+    "department": "Tribal Welfare Department",
+    "description": "Financial assistance for ST students for higher education.",
+    "benefit": "Yearly scholarship covering tuition and maintenance.",
+    "benefit_amount": 15000.0,
+    "frequency": "annual",
+    "demo": true,
+    "data_status": "sample/demo - verify against current government notification",
+    "eligibility": {
+      "categories": ["ST"],
+      "max_income": 250000.0,
+      "education_levels": ["UG", "PG", "Diploma", "PhD"]
+    },
+    "conflicts_with": ["sc_scholarship", "bc_mbc_scholarship", "minority_scholarship"],
     "official_source": "https://www.adwelfare.tn.gov.in/",
     "last_verified": "2023-10-01"
   },
@@ -68,6 +87,7 @@
     "data_status": "sample/demo - verify against current government notification",
     "eligibility": {
       "disability_required": true,
+      "min_disability_percentage": 40.0,
       "max_income": 300000.0
     },
     "conflicts_with": [],
@@ -89,7 +109,7 @@
       "max_income": 200000.0,
       "education_levels": ["UG", "PG"]
     },
-    "conflicts_with": ["bc_mbc_scholarship"],
+    "conflicts_with": ["sc_scholarship", "st_scholarship", "bc_mbc_scholarship"],
     "official_source": "https://www.bcmbcmw.tn.gov.in/",
     "last_verified": "2023-10-01"
   },
