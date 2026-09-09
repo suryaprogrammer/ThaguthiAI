@@ -142,6 +142,7 @@ function SectionHeading({ children }: { children: React.ReactNode }) {
 
 function PersonalStep({ form, setForm }: { form: FormData; setForm: (f: FormData) => void }) {
   const { t } = useLanguage();
+  const [districtInput, setDistrictInput] = useState('');
   return (
     <Box>
       <SectionHeading>{t('stepPersonal')}</SectionHeading>
@@ -171,7 +172,14 @@ function PersonalStep({ form, setForm }: { form: FormData; setForm: (f: FormData
             options={tnDistricts}
             value={form.district || null}
             onChange={(_, newValue) => setForm({ ...form, district: newValue || '' })}
-            noOptionsText={t('noResultsFound')}
+            inputValue={districtInput}
+            onInputChange={(_, value) => setDistrictInput(value)}
+            noOptionsText={districtInput.trim() ? t('noResultsFound') : ' '}
+            filterOptions={(options, state) => {
+              const q = state.inputValue.trim().toLowerCase();
+              if (!q) return options;
+              return options.filter((opt) => opt.toLowerCase().includes(q));
+            }}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -194,6 +202,43 @@ function PersonalStep({ form, setForm }: { form: FormData; setForm: (f: FormData
         </Grid>
       </Grid>
     </Box>
+  );
+}
+
+function CollegeAutocomplete({ form, setForm }: { form: FormData; setForm: (f: FormData) => void }) {
+  const { t } = useLanguage();
+  const [collegeInput, setCollegeInput] = useState(form.collegeName || '');
+
+  return (
+    <Autocomplete
+      freeSolo
+      fullWidth
+      options={tnColleges}
+      value={form.collegeName || ''}
+      onChange={(_, newValue) => {
+        const val = typeof newValue === 'string' ? newValue : newValue || '';
+        setForm({ ...form, collegeName: val });
+        setCollegeInput(val);
+      }}
+      inputValue={collegeInput}
+      onInputChange={(_, value) => {
+        setCollegeInput(value);
+        setForm({ ...form, collegeName: value });
+      }}
+      noOptionsText={collegeInput.trim() ? t('noResultsFound') : ' '}
+      filterOptions={(options, state) => {
+        const q = state.inputValue.trim().toLowerCase();
+        if (!q) return options;
+        return options.filter((opt) => opt.toLowerCase().includes(q));
+      }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          label={t('labelCollegeName')}
+          placeholder={t('placeholderCollegeName')}
+        />
+      )}
+    />
   );
 }
 
@@ -256,22 +301,7 @@ function EducationStep({ form, setForm }: { form: FormData; setForm: (f: FormDat
           </FormControl>
         </Grid>
         <Grid size={{ xs: 12 }}>
-          <Autocomplete
-            freeSolo
-            fullWidth
-            options={tnColleges}
-            value={form.collegeName}
-            onChange={(_, newValue) => setForm({ ...form, collegeName: newValue || '' })}
-            onInputChange={(_, newInputValue) => setForm({ ...form, collegeName: newInputValue })}
-            noOptionsText={t('noResultsFound')}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label={t('labelCollegeName')}
-                placeholder={t('placeholderCollegeName')}
-              />
-            )}
-          />
+          <CollegeAutocomplete form={form} setForm={setForm} />
         </Grid>
       </Grid>
     </Box>

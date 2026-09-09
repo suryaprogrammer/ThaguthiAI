@@ -1,8 +1,23 @@
-/**
- * Canonical dataset of major Colleges, Universities, and Institutions in Tamil Nadu.
- * Avoids duplicates, supports case-insensitive search and partial text autocomplete matching.
- */
-export const tnColleges: string[] = [
+import type { College } from './collegeTypes';
+import { agricultureColleges } from './agricultureColleges';
+import { artsScienceColleges } from './artsScienceColleges';
+import { engineeringColleges } from './engineeringColleges';
+import { lawColleges } from './lawColleges';
+import { medicalColleges } from './medicalColleges';
+import { polytechnicColleges } from './polytechnicColleges';
+
+export type { College };
+
+export const allColleges: College[] = [
+  ...engineeringColleges,
+  ...medicalColleges,
+  ...artsScienceColleges,
+  ...lawColleges,
+  ...agricultureColleges,
+  ...polytechnicColleges,
+];
+
+const baseColleges: string[] = [
   'Alagappa Chettiar Government College of Engineering and Technology, Karaikudi',
   'Alagappa University, Karaikudi',
   'American College, Madurai',
@@ -80,3 +95,19 @@ export const tnColleges: string[] = [
   'Vels Institute of Science, Technology & Advanced Studies (VISTAS), Chennai',
   'Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and Technology, Chennai'
 ];
+
+const structuredCollegeNames = allColleges.map((c) => c.name);
+
+/**
+ * Canonical deduplicated, alphabetically sorted list of colleges in Tamil Nadu.
+ */
+export const tnColleges: string[] = Array.from(
+  new Set([...baseColleges, ...structuredCollegeNames])
+).sort((a, b) => a.localeCompare(b));
+
+export function searchColleges(query: string): string[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return [];
+  return tnColleges.filter((name) => name.toLowerCase().includes(q));
+}
+
