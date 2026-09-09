@@ -10,9 +10,9 @@ class TestConflicts:
     
     def test_conflicting_schemes(self):
         """Test that known conflicting schemes are detected."""
-        # sc_scholarship conflicts with bc_mbc_scholarship
+        # sc_scholarship conflicts with bc_mbc_ug_degree_free_education
         response = client.post('/api/conflicts/check', json={
-            'scheme_ids': ['sc_scholarship', 'bc_mbc_scholarship']
+            'scheme_ids': ['sc_scholarship', 'bc_mbc_ug_degree_free_education']
         })
         assert response.status_code == 200
         data = response.json()
@@ -49,7 +49,7 @@ class TestConflicts:
     def test_conflict_response_structure(self):
         """Test conflict response has correct structure."""
         response = client.post('/api/conflicts/check', json={
-            'scheme_ids': ['sc_scholarship', 'bc_mbc_scholarship']
+            'scheme_ids': ['sc_scholarship', 'bc_mbc_ug_degree_free_education']
         })
         data = response.json()
         assert 'conflicts_found' in data
