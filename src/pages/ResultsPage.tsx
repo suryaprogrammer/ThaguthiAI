@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
@@ -11,6 +11,7 @@ import Alert from '@mui/material/Alert';
 import AlertTitle from '@mui/material/AlertTitle';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import CircularProgress from '@mui/material/CircularProgress';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
@@ -50,8 +51,76 @@ function SummaryCard({ label, value, color, icon }: { label: string; value: stri
 export default function ResultsPage() {
   const [activeTab, setActiveTab] = useState(0);
   const navigate = useNavigate();
-  const { recommendation, explanation } = useEligibility();
+  const { recommendation, explanation, profile, loading, error, runAnalysis } = useEligibility();
   const { t } = useLanguage();
+
+  useEffect(() => {
+    if (!recommendation && profile && !loading && !error) {
+      runAnalysis(profile);
+    }
+  }, [recommendation, profile, loading, error, runAnalysis]);
+
+  if (loading) {
+    return (
+      <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '60vh', py: 8 }}>
+        <CircularProgress size={48} sx={{ color: 'primary.main', mb: 2 }} />
+        <Typography variant="h6" sx={{ fontWeight: 700, color: 'primary.main', mb: 0.5 }}>
+          Evaluating Scheme Eligibility...
+        </Typography>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          Checking your profile against official Tamil Nadu government rules.
+        </Typography>
+      </Box>
+    );
+  }
+
+  if (error) {
+    return (
+      <Box sx={{ bgcolor: 'background.default', minHeight: '80vh', py: 6 }}>
+        <Container maxWidth="md">
+          <Alert severity="error" sx={{ mb: 3 }}>
+            <AlertTitle sx={{ fontWeight: 700 }}>Unable to retrieve eligibility results</AlertTitle>
+            {error}
+          </Alert>
+          <Button
+            variant="contained"
+            onClick={() => (profile ? runAnalysis(profile) : navigate('/check-eligibility'))}
+            sx={{ fontWeight: 700 }}
+          >
+            {profile ? 'Retry Eligibility Check' : 'Go to Form'}
+          </Button>
+        </Container>
+      </Box>
+    );
+  }
+
+  if (!recommendation && !profile) {
+    return (
+      <Box sx={{ bgcolor: 'background.default', minHeight: '80vh', py: 6 }}>
+        <Container maxWidth="md">
+          <Paper elevation={0} sx={{ p: 4, border: '1px solid', borderColor: 'divider', textAlign: 'center', borderRadius: 2 }}>
+            <InfoOutlinedIcon sx={{ fontSize: 48, color: 'primary.main', mb: 1.5 }} />
+            <Typography variant="h5" sx={{ fontWeight: 800, color: 'primary.main', mb: 1 }}>
+              No Eligibility Assessment Found
+            </Typography>
+            <Typography variant="body1" sx={{ color: 'text.secondary', mb: 3, maxWidth: 500, mx: 'auto' }}>
+              Please complete the student profile form to analyze your eligibility for Tamil Nadu government scholarship schemes.
+            </Typography>
+            <Button
+              variant="contained"
+              color="secondary"
+              size="large"
+              onClick={() => navigate('/check-eligibility')}
+              startIcon={<CheckCircleIcon />}
+              sx={{ fontWeight: 700, px: 4, py: 1.25 }}
+            >
+              {t('btnCheckNow')}
+            </Button>
+          </Paper>
+        </Container>
+      </Box>
+    );
+  }
 
   const eligibleSchemes = (recommendation?.eligible_schemes || []).filter(
     (s) => s.eligible && s.scheme_id !== 'merit_scholarship'

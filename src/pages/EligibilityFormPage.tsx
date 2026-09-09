@@ -445,9 +445,13 @@ export default function EligibilityFormPage() {
       male: 'male',
       female: 'female',
     };
+    const categoryKey = (form.community || '').toLowerCase();
     const categoryMap: Record<string, string> = {
-      sc: 'SC', st: 'ST', mbc: 'MBC', bc: 'BC', bcm: 'BCM', dnc: 'DNC', obc: 'OBC', minority: 'BC', general: 'OC'
+      sc: 'SC', sca: 'SCA', st: 'ST', mbc: 'MBC', bc: 'BC', bcm: 'BCM', dnc: 'DNC', obc: 'OBC', minority: 'BC', general: 'OC'
     };
+    const validCategories = ['SC', 'SCA', 'ST', 'MBC', 'BC', 'BCM', 'DNC', 'OBC', 'OC'];
+    const uppercaseCommunity = (form.community || '').toUpperCase();
+    const category = categoryMap[categoryKey] || (validCategories.includes(uppercaseCommunity) ? uppercaseCommunity : 'OC');
     const courseLevelMap: Record<string, 'UG' | 'PG' | 'DIPLOMA' | 'PHD'> = {
       ug: 'UG', pg: 'PG', diploma: 'DIPLOMA', phd: 'PHD', professional: 'UG'
     };
@@ -461,7 +465,7 @@ export default function EligibilityFormPage() {
       name: form.fullName || 'Student',
       age: parseInt(form.age) || 20,
       gender: genderMap[form.gender] || 'other',
-      category: categoryMap[form.community] || 'OC',
+      category: category,
       annual_family_income: parseFloat(form.annualIncome) || 0,
       marks_percentage: 85,
       year_of_study: parseInt(form.yearOfStudy) || 1,
