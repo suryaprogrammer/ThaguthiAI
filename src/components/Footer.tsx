@@ -41,7 +41,7 @@ export default function Footer() {
                 <VerifiedOutlinedIcon sx={{ color: 'white', fontSize: 20 }} />
               </Box>
               <Typography variant="h6" sx={{ fontWeight: 800, color: 'white', letterSpacing: '-0.01em' }}>
-                {t('appTitle')}<span style={{ color: '#e74c3c' }}>AI</span>
+                {t('appTitle').replace(/AI$/, '')}<span style={{ color: '#e74c3c' }}>AI</span>
               </Typography>
             </Box>
             <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.7)', mb: 2, maxWidth: 360, lineHeight: 1.7 }}>

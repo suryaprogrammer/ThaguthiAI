@@ -106,7 +106,7 @@ export default function Header() {
                 variant="h6"
                 sx={{ fontWeight: 800, color: 'primary.main', lineHeight: 1.1, letterSpacing: '-0.01em', fontSize: '1.125rem' }}
               >
-                {t('appTitle')}<span style={{ color: '#c0392b' }}>AI</span>
+                {t('appTitle').replace(/AI$/, '')}<span style={{ color: '#c0392b' }}>AI</span>
               </Typography>
               <Typography variant="caption" sx={{ color: 'text.secondary', fontSize: '0.65rem', display: 'block', lineHeight: 1 }}>
                 {t('appTagline')}
@@ -197,7 +197,7 @@ export default function Header() {
         <Box sx={{ width: 280, pt: 2 }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', px: 2, pb: 1 }}>
             <Typography variant="h6" sx={{ fontWeight: 800, color: 'primary.main' }}>
-              {t('appTitle')}<span style={{ color: '#c0392b' }}>AI</span>
+              {t('appTitle').replace(/AI$/, '')}<span style={{ color: '#c0392b' }}>AI</span>
             </Typography>
             <IconButton onClick={() => setDrawerOpen(false)}>
               <CloseIcon />
