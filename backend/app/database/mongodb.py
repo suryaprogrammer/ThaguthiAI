@@ -30,9 +30,11 @@ class MongoDB:
             
         try:
             client_kwargs = {
-                'serverSelectionTimeoutMS': 10000,
-                'connectTimeoutMS': 10000,
-            }
+    'serverSelectionTimeoutMS': 30000,
+    'connectTimeoutMS': 30000,
+    'socketTimeoutMS': 30000,
+    'retryWrites': True,
+}
             if ca_file:
                 client_kwargs['tlsCAFile'] = ca_file
 
