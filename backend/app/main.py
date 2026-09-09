@@ -92,5 +92,17 @@ async def health_check():
     return {
         'status': 'ok',
         'service': 'ThaguthiAI Backend',
-        'mongodb': 'connected' if MongoDB.is_connected() else 'not connected'
+        'mongodb': 'connected' if MongoDB.is_connected() else 'not connected',
+        'mongodb_details': MongoDB.get_diagnostics()
     }
+
+
+@app.get(
+    '/api/db-health',
+    tags=['Health'],
+    summary='Database diagnostic check',
+    description='Returns sanitized production MongoDB diagnostics without exposing credentials.'
+)
+async def db_health_check():
+    """Database diagnostic check endpoint."""
+    return MongoDB.get_diagnostics()
