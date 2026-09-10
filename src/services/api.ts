@@ -56,6 +56,13 @@ export interface SchemeEligibility {
   first_graduate_required: boolean | null;
 }
 
+export interface SchemeBenefitDetail {
+  type: string;
+  amount?: number;
+  currency?: string;
+  description: string;
+}
+
 export interface BackendScheme {
   id: string;
   name: string;
@@ -70,6 +77,14 @@ export interface BackendScheme {
   conflicts_with: string[];
   official_source: string;
   last_verified: string;
+  scheme_type?: string;
+  source_url?: string;
+  source_title?: string;
+  verified_on?: string;
+  benefits?: SchemeBenefitDetail[];
+  application_method?: string;
+  conflicts?: string[];
+  requires_verification?: boolean;
 }
 
 export interface SchemesListResponse {

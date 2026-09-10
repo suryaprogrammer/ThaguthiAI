@@ -22,6 +22,7 @@ from app.api.conflicts import router as conflicts_router
 from app.api.recommendation import router as recommendation_router
 from app.api.explanation import router as explanation_router
 from app.database.mongodb import MongoDB
+from app.database.seed_schemes import seed_schemes
 
 
 @asynccontextmanager
@@ -31,7 +32,11 @@ async def lifespan(app: FastAPI):
     logger.info('Starting ThaguthiAI Backend...')
     MongoDB.connect()
     if MongoDB.is_connected():
-        logger.info('MongoDB connected.')
+        logger.info('MongoDB connected. Triggering idempotent scheme seed...')
+        try:
+            seed_schemes()
+        except Exception as e:
+            logger.error(f'Scheme seeding error: {e}')
     else:
         logger.info('Running without MongoDB. Core features still work.')
     yield

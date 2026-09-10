@@ -3,32 +3,56 @@
     "id": "bc_mbc_ug_degree_free_education",
     "name": "BC/MBC Free Education Scheme (3-Year UG Degree)",
     "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Fee Concession",
     "description": "Free education scheme for BC, BCM, MBC, and DNC students pursuing 3-year UG degree courses (B.A., B.Sc., B.Com., etc.) in Government and Government-Aided colleges.",
+    "data_status": "verified - BC Welfare Official Policy",
+    "source_url": "https://www.bcw.tn.gov.in/sub_page/8",
+    "source_title": "TN BC Welfare Free Education Scheme for 3-Year UG",
+    "verified_on": "2026-09-10",
     "benefit": "Complete tuition fee waiver credited annually.",
-    "benefit_amount": 10000.0,
+    "benefit_amount": 0.0,
+    "benefits": [
+      {
+        "type": "fee_waiver",
+        "description": "Complete tuition fee waiver for 3-Year UG Degree"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "verified - BC Welfare Official Policy",
     "eligibility": {
       "categories": ["BC", "BCM", "MBC", "DNC"],
       "college_types": ["government", "aided"],
       "education_levels": ["UG"],
       "max_income": null
     },
+    "conflicts": ["bc_mbc_ug_professional_free_education", "bc_mbc_other_post_matric", "sc_scholarship", "st_scholarship", "minority_scholarship"],
     "conflicts_with": ["bc_mbc_ug_professional_free_education", "bc_mbc_other_post_matric", "sc_scholarship", "st_scholarship", "minority_scholarship"],
+    "application_method": "Submission through College Principal to District BC Welfare Officer",
     "official_source": "https://www.bcw.tn.gov.in/sub_page/8",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
   },
   {
     "id": "bc_mbc_polytechnic_free_education",
     "name": "BC/MBC Free Education Scheme (Polytechnic Diploma)",
     "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Fee Concession",
     "description": "Financial assistance for BC, BCM, MBC, and DNC students pursuing Polytechnic Diploma courses in Government and Government-Aided polytechnics.",
+    "data_status": "requires_verification - First Graduate / Diploma in family condition requires verification",
+    "source_url": "https://www.bcw.tn.gov.in/sub_page/8",
+    "source_title": "TN BC Welfare Free Education Scheme for Polytechnic",
+    "verified_on": "2026-09-10",
     "benefit": "Annual fee concession and scholarship stipend.",
     "benefit_amount": 8000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 8000.0,
+        "currency": "INR",
+        "description": "Annual fee concession and scholarship stipend"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "requires_verification - First Graduate / Diploma in family condition requires verification",
     "eligibility": {
       "categories": ["BC", "BCM", "MBC", "DNC"],
       "college_types": ["government", "aided"],
@@ -36,20 +60,32 @@
       "max_income": 250000.0,
       "first_graduate_required": true
     },
+    "conflicts": ["bc_mbc_other_post_matric", "sc_scholarship", "st_scholarship", "minority_scholarship"],
     "conflicts_with": ["bc_mbc_other_post_matric", "sc_scholarship", "st_scholarship", "minority_scholarship"],
+    "application_method": "Submission through Polytechnic Principal",
     "official_source": "https://www.bcw.tn.gov.in/sub_page/8",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
   },
   {
     "id": "bc_mbc_ug_professional_free_education",
     "name": "BC/MBC Free Education Scheme (UG Professional Courses)",
     "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Fee Concession",
     "description": "Free education scheme for BC, BCM, MBC, and DNC students in Professional UG courses in Government, Government-Aided, and Self-Financing colleges under Government Quota.",
+    "data_status": "verified - BC Welfare Official Policy",
+    "source_url": "https://www.bcw.tn.gov.in/sub_page/8",
+    "source_title": "TN BC Welfare Free Education Scheme for Professional Courses",
+    "verified_on": "2026-09-10",
     "benefit": "Annual tuition fee waiver.",
-    "benefit_amount": 20000.0,
+    "benefit_amount": 0.0,
+    "benefits": [
+      {
+        "type": "fee_waiver",
+        "description": "Tuition fee waiver for UG professional courses"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "verified - BC Welfare Official Policy",
     "eligibility": {
       "categories": ["BC", "BCM", "MBC", "DNC"],
       "college_types": ["government", "aided", "self_financing_government_quota"],
@@ -57,20 +93,34 @@
       "max_income": 250000.0,
       "first_graduate_required": true
     },
+    "conflicts": ["bc_mbc_ug_degree_free_education", "bc_mbc_other_post_matric", "sc_scholarship", "st_scholarship", "minority_scholarship"],
     "conflicts_with": ["bc_mbc_ug_degree_free_education", "bc_mbc_other_post_matric", "sc_scholarship", "st_scholarship", "minority_scholarship"],
+    "application_method": "Submission through College Office via Single Window Counselling",
     "official_source": "https://www.bcw.tn.gov.in/sub_page/8",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
   },
   {
     "id": "bc_mbc_other_post_matric",
     "name": "BC/MBC Post-Matric Scholarship (Other Courses)",
     "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Scholarship",
     "description": "Post-matric scholarship for BC, BCM, MBC, and DNC students in non-professional post-matric courses (for non-first-graduates).",
+    "data_status": "verified - BC Welfare Official Policy",
+    "source_url": "https://www.bcw.tn.gov.in/sub_page/8",
+    "source_title": "TN BC Welfare Post-Matric Scholarship for Non-Professional Courses",
+    "verified_on": "2026-09-10",
     "benefit": "Annual scholarship stipend.",
     "benefit_amount": 12000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 12000.0,
+        "currency": "INR",
+        "description": "Annual scholarship stipend"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "verified - BC Welfare Official Policy",
     "eligibility": {
       "categories": ["BC", "BCM", "MBC", "DNC"],
       "college_types": ["government", "aided", "self_financing_government_quota"],
@@ -78,165 +128,1108 @@
       "max_income": 250000.0,
       "first_graduate_required": false
     },
+    "conflicts": ["bc_mbc_ug_degree_free_education", "bc_mbc_ug_professional_free_education", "sc_scholarship", "st_scholarship", "minority_scholarship"],
     "conflicts_with": ["bc_mbc_ug_degree_free_education", "bc_mbc_ug_professional_free_education", "sc_scholarship", "st_scholarship", "minority_scholarship"],
+    "application_method": "Online via TN e-District Scholarship Portal",
     "official_source": "https://www.bcw.tn.gov.in/sub_page/8",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
   },
   {
     "id": "sc_scholarship",
     "name": "SC Post-Matric Scholarship",
     "department": "Adi Dravidar and Tribal Welfare Department",
+    "scheme_type": "Scholarship",
     "description": "Financial assistance for SC and SCA students pursuing higher education.",
+    "data_status": "verified - Adi Dravidar Welfare Policy",
+    "source_url": "https://www.adwelfare.tn.gov.in/",
+    "source_title": "TN Adi Dravidar Welfare SC Post-Matric Scholarship",
+    "verified_on": "2026-09-10",
     "benefit": "Yearly scholarship covering tuition fee and maintenance allowance.",
     "benefit_amount": 15000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 15000.0,
+        "currency": "INR",
+        "description": "Tuition fee reimbursement and maintenance allowance"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "verified - Adi Dravidar Welfare Policy",
     "eligibility": {
       "categories": ["SC", "SCA"],
       "max_income": 250000.0,
       "college_types": ["government", "aided", "self_financing_government_quota", "private_self_financing"],
       "education_levels": ["UG", "PG", "Diploma", "PhD"]
     },
+    "conflicts": ["st_scholarship", "bc_mbc_ug_degree_free_education", "bc_mbc_ug_professional_free_education", "bc_mbc_other_post_matric", "minority_scholarship"],
     "conflicts_with": ["st_scholarship", "bc_mbc_ug_degree_free_education", "bc_mbc_ug_professional_free_education", "bc_mbc_other_post_matric", "minority_scholarship"],
+    "application_method": "Online via TN e-District / ADW Portal",
     "official_source": "https://www.adwelfare.tn.gov.in/",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
   },
   {
     "id": "st_scholarship",
     "name": "ST Post-Matric Scholarship",
     "department": "Tribal Welfare Department",
+    "scheme_type": "Scholarship",
     "description": "Financial assistance for ST students pursuing higher education.",
+    "data_status": "verified - Tribal Welfare Policy",
+    "source_url": "https://www.adwelfare.tn.gov.in/",
+    "source_title": "TN Tribal Welfare ST Post-Matric Scholarship",
+    "verified_on": "2026-09-10",
     "benefit": "Yearly scholarship covering tuition fee and maintenance allowance.",
     "benefit_amount": 15000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 15000.0,
+        "currency": "INR",
+        "description": "Tuition fee reimbursement and maintenance allowance"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "verified - Tribal Welfare Policy",
     "eligibility": {
       "categories": ["ST"],
       "max_income": 250000.0,
       "college_types": ["government", "aided", "self_financing_government_quota", "private_self_financing"],
       "education_levels": ["UG", "PG", "Diploma", "PhD"]
     },
-    "conflicts_with": ["sc_scholarship", "bc_mbc_ug_degree_free_education", "bc_mbc_ug_professional_free_education", "bc_mbc_other_post_matric", "minority_scholarship"],
+    "conflicts": ["sc_scholarship", "bc_mbc_ug_degree_free_education", "bc_mbc_ug_professional_free_education", "bc_mbc_other_post_matric", "minority_scholarship"],
+    "conflicts_with": ["sc_scholarship", "st_scholarship", "bc_mbc_ug_degree_free_education", "bc_mbc_ug_professional_free_education", "bc_mbc_other_post_matric", "minority_scholarship"],
+    "application_method": "Online via TN e-District / Tribal Welfare Portal",
     "official_source": "https://www.adwelfare.tn.gov.in/",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
   },
   {
     "id": "first_graduate_assistance",
     "name": "First Graduate Tuition Fee Concession",
     "department": "Higher Education Department",
+    "scheme_type": "Fee Concession",
     "description": "Fee concession for students who are the first in their family to graduate, admitted under single window counselling.",
+    "data_status": "verified - TN Higher Education Policy",
+    "source_url": "https://tndce.tn.gov.in/Home/scholarship",
+    "source_title": "TN Higher Education First Graduate Concession Scheme",
+    "verified_on": "2026-09-10",
     "benefit": "Tuition fee waiver for professional and UG degree courses.",
-    "benefit_amount": 20000.0,
+    "benefit_amount": 0.0,
+    "benefits": [
+      {
+        "type": "fee_waiver",
+        "description": "Tuition fee concession for first-generation graduates"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "verified - TN Higher Education Policy",
     "eligibility": {
       "first_graduate_required": true,
       "college_types": ["government", "aided", "self_financing_government_quota"],
       "education_levels": ["UG"],
       "max_income": null
     },
+    "conflicts": [],
     "conflicts_with": [],
+    "application_method": "TNEA Single Window Counselling / e-Sevai Certificate Submission",
     "official_source": "https://tndce.tn.gov.in/Home/scholarship",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
   },
   {
     "id": "disability_educational_scholarship",
     "name": "Differently Abled Students Educational Scholarship",
     "department": "Commissionerate for Welfare of Differently Abled Persons",
+    "scheme_type": "Educational Assistance",
     "description": "Scholarship for differently abled students studying in recognized schools/colleges with 40% and above in previous qualifying examination.",
+    "data_status": "verified - Welfare of Differently Abled Persons Policy",
+    "source_url": "https://www.scd.tn.gov.in/specialedu.php",
+    "source_title": "TN Welfare of Differently Abled Persons Educational Scholarship",
+    "verified_on": "2026-09-10",
     "benefit": "Annual educational scholarship stipend.",
-    "benefit_amount": 18000.0,
+    "benefit_amount": 7000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 7000.0,
+        "currency": "INR",
+        "description": "Annual educational stipend for differently abled students"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "verified - Welfare of Differently Abled Persons Policy",
     "eligibility": {
       "disability_required": true,
       "min_marks": 40.0,
       "max_income": null
     },
+    "conflicts": [],
     "conflicts_with": [],
+    "application_method": "Submission to District Differently Abled Welfare Officer",
     "official_source": "https://www.scd.tn.gov.in/specialedu.php",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
   },
   {
     "id": "minority_scholarship",
     "name": "Minority Students Scholarship",
     "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Scholarship",
     "description": "Scholarship targeted at religious minority students (Muslim, Christian, Sikh, Buddhist, Jain, Parsi) for post-matric studies.",
+    "data_status": "verified - Minorities Welfare Policy",
+    "source_url": "https://www.bcw.tn.gov.in/",
+    "source_title": "TN Minorities Welfare Post-Matric Scholarship",
+    "verified_on": "2026-09-10",
     "benefit": "Annual scholarship amount.",
     "benefit_amount": 10000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 10000.0,
+        "currency": "INR",
+        "description": "Annual minority post-matric scholarship grant"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "verified - Minorities Welfare Policy",
     "eligibility": {
       "minority_required": true,
       "max_income": 200000.0,
       "education_levels": ["UG", "PG", "Diploma"]
     },
+    "conflicts": ["sc_scholarship", "st_scholarship", "bc_mbc_ug_degree_free_education", "bc_mbc_ug_professional_free_education", "bc_mbc_other_post_matric"],
     "conflicts_with": ["sc_scholarship", "st_scholarship", "bc_mbc_ug_degree_free_education", "bc_mbc_ug_professional_free_education", "bc_mbc_other_post_matric"],
+    "application_method": "Online via National Scholarship Portal (NSP)",
     "official_source": "https://www.bcw.tn.gov.in/",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
   },
   {
     "id": "merit_scholarship",
     "name": "Tamil Nadu Merit Scholarship",
     "department": "Higher Education Department",
+    "scheme_type": "Scholarship",
     "description": "Merit reward for students based on academic performance.",
+    "data_status": "requires_verification - pending official notification verification for 75% cutoff and ₹3L ceiling",
+    "source_url": "https://tndce.tn.gov.in/Home/scholarship",
+    "source_title": "TN Higher Education State Merit Scholarship",
+    "verified_on": "2026-09-10",
     "benefit": "Cash award distributed annually.",
     "benefit_amount": 15000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 15000.0,
+        "currency": "INR",
+        "description": "Annual merit cash award"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "requires_verification - pending official notification verification for 75% cutoff and ₹3L ceiling",
     "eligibility": {
       "min_marks": 75.0,
       "max_income": 300000.0,
       "education_levels": ["UG", "PG"]
     },
+    "conflicts": [],
     "conflicts_with": [],
+    "application_method": "Submission through Collegiate Education Department",
     "official_source": "https://tndce.tn.gov.in/Home/scholarship",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
   },
   {
     "id": "pudhumai_penn",
     "name": "Pudhumai Penn Scheme",
     "department": "Social Welfare and Women Empowerment Department",
+    "scheme_type": "Monthly Assistance",
     "description": "Higher education assurance assistance for female students who studied classes VI to XII in Tamil Nadu Government schools.",
+    "data_status": "verified - Social Welfare Policy",
+    "source_url": "https://tils.tn.gov.in/schemes",
+    "source_title": "Moovalur Ramamirtham Ammiyar Higher Education Assurance Scheme (Pudhumai Penn)",
+    "verified_on": "2026-09-10",
     "benefit": "Rs. 1,000 per month credited directly to bank account until degree completion.",
     "benefit_amount": 12000.0,
+    "benefits": [
+      {
+        "type": "monthly",
+        "amount": 1000.0,
+        "currency": "INR",
+        "description": "Rs 1,000 per month direct bank transfer"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "verified - Social Welfare Policy",
     "eligibility": {
       "gender": ["female"],
       "school_background": ["government"],
       "education_levels": ["UG", "Diploma"],
       "max_income": null
     },
+    "conflicts": ["tamil_pudhalvan"],
     "conflicts_with": ["tamil_pudhalvan"],
+    "application_method": "Online portal via Pen Kalvi / College Nodal Officer",
     "official_source": "https://tils.tn.gov.in/schemes",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
   },
   {
     "id": "tamil_pudhalvan",
     "name": "Tamil Pudhalvan Scheme",
     "department": "Higher Education Department",
+    "scheme_type": "Monthly Assistance",
     "description": "Higher education assistance for male students who studied classes VI to XII in Tamil Nadu Government schools.",
+    "data_status": "verified - Higher Education Policy",
+    "source_url": "https://tils.tn.gov.in/schemes",
+    "source_title": "TN Higher Education Assistance Scheme (Tamil Pudhalvan)",
+    "verified_on": "2026-09-10",
     "benefit": "Rs. 1,000 per month credited directly to bank account until degree completion.",
     "benefit_amount": 12000.0,
+    "benefits": [
+      {
+        "type": "monthly",
+        "amount": 1000.0,
+        "currency": "INR",
+        "description": "Rs 1,000 per month direct bank transfer"
+      }
+    ],
     "frequency": "annual",
     "demo": false,
-    "data_status": "verified - Higher Education Policy",
     "eligibility": {
       "gender": ["male"],
       "school_background": ["government"],
       "education_levels": ["UG", "Diploma"],
       "max_income": null
     },
+    "conflicts": ["pudhumai_penn"],
     "conflicts_with": ["pudhumai_penn"],
+    "application_method": "Online portal via College Nodal Officer",
     "official_source": "https://tils.tn.gov.in/schemes",
-    "last_verified": "2026-03-01"
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "evr_nagammai_free_education",
+    "name": "Periyar EVR Nagammai Free Education Scheme",
+    "department": "Higher Education Department",
+    "scheme_type": "Fee Concession",
+    "description": "Financial assistance and tuition fee waiver for women students pursuing PG courses in Government and Aided Arts and Science colleges.",
+    "data_status": "verified",
+    "source_url": "https://tndce.tn.gov.in/Home/scholarship",
+    "source_title": "TN Collegiate Education - Periyar EVR Nagammai Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Complete tuition fee waiver for PG degree.",
+    "benefit_amount": 0.0,
+    "benefits": [
+      {
+        "type": "fee_waiver",
+        "description": "Tuition fee waiver for female PG students"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "gender": ["female"],
+      "education_levels": ["PG"],
+      "max_income": 50000.0,
+      "college_types": ["government", "aided"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "College Principal Endorsement & Collegiate Education Directorate",
+    "official_source": "https://tndce.tn.gov.in/Home/scholarship",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "rimc_dehradun_scholarship",
+    "name": "R.I.M.C. Dehradun Scholarship, Tamil Nadu",
+    "department": "School Education Department",
+    "scheme_type": "Scholarship",
+    "description": "State scholarship granted to Tamil Nadu cadets studying at Rashtriya Indian Military College (RIMC), Dehradun.",
+    "data_status": "requires_verification - RIMC annual state grant amount & income ceiling require verification",
+    "source_url": "https://www.tn.gov.in/",
+    "source_title": "Government of Tamil Nadu Official Portal - RIMC Scholarship",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual educational stipend of Rs. 20,000 for cadets.",
+    "benefit_amount": 20000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 20000.0,
+        "currency": "INR",
+        "description": "Annual educational stipend for RIMC cadets"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "education_levels": ["School", "UG"],
+      "max_income": 200000.0
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Through Director of School Education / RIMC Administration",
+    "official_source": "https://www.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "state_special_post_matric_scholarship",
+    "name": "State Special Scholarship for Post-Matric Students",
+    "department": "Adi Dravidar and Tribal Welfare Department",
+    "scheme_type": "Educational Assistance",
+    "description": "Special state assistance for SC/ST students in post-matric courses under state welfare provisions.",
+    "data_status": "verified",
+    "source_url": "https://www.adwelfare.tn.gov.in/",
+    "source_title": "TN ADW State Special Post-Matric Educational Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual educational assistance stipend for fees and maintenance.",
+    "benefit_amount": 10000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 10000.0,
+        "currency": "INR",
+        "description": "Annual educational assistance stipend"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["SC", "SCA", "ST"],
+      "max_income": 250000.0,
+      "education_levels": ["UG", "PG", "Diploma"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online via TN e-District / ADW Scholarship Portal",
+    "official_source": "https://www.adwelfare.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "higher_education_special_scholarship",
+    "name": "Higher Education Special Scholarship Scheme",
+    "department": "Adi Dravidar and Tribal Welfare Department",
+    "scheme_type": "Educational Assistance",
+    "description": "Higher education special scholarship for SC/ST/SCC students studying in hostels attached to colleges.",
+    "data_status": "verified",
+    "source_url": "https://www.adwelfare.tn.gov.in/",
+    "source_title": "TN ADW Special Hostel Scholarship Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Rs. 8,000 per annum for UG/Diploma hostellers.",
+    "benefit_amount": 8000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 8000.0,
+        "currency": "INR",
+        "description": "Hostel special maintenance allowance"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["SC", "SCA", "ST"],
+      "max_income": 250000.0,
+      "education_levels": ["UG", "PG", "Diploma"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Application through College Hostel Warden & District ADW Office",
+    "official_source": "https://www.adwelfare.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "bc_post_matric_scholarship",
+    "name": "BC Post-Matric Scholarship",
+    "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Scholarship",
+    "description": "Post-matric educational scholarship for Backward Classes (BC) students pursuing post-matric courses.",
+    "data_status": "verified",
+    "source_url": "https://www.bcw.tn.gov.in/",
+    "source_title": "TN BC Welfare Post-Matric Scholarship Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual maintenance allowance and fee assistance.",
+    "benefit_amount": 6000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 6000.0,
+        "currency": "INR",
+        "description": "Maintenance allowance and fee assistance"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["BC", "BCM"],
+      "max_income": 250000.0,
+      "education_levels": ["UG", "PG", "Diploma", "PhD"]
+    },
+    "conflicts": ["sc_scholarship", "st_scholarship"],
+    "conflicts_with": ["sc_scholarship", "st_scholarship"],
+    "application_method": "Online via TN e-District / BCW Scholarship Portal",
+    "official_source": "https://www.bcw.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "mbc_post_matric_scholarship",
+    "name": "MBC Post-Matric Scholarship",
+    "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Scholarship",
+    "description": "Post-matric educational scholarship for Most Backward Classes (MBC) and Denotified Communities (DNC) students.",
+    "data_status": "verified",
+    "source_url": "https://www.bcw.tn.gov.in/",
+    "source_title": "TN MBC Welfare Post-Matric Scholarship Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual maintenance allowance and course fee reimbursement.",
+    "benefit_amount": 6000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 6000.0,
+        "currency": "INR",
+        "description": "Maintenance allowance and fee assistance"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["MBC", "DNC", "MBC/DNC"],
+      "max_income": 250000.0,
+      "education_levels": ["UG", "PG", "Diploma", "PhD"]
+    },
+    "conflicts": ["sc_scholarship", "st_scholarship"],
+    "conflicts_with": ["sc_scholarship", "st_scholarship"],
+    "application_method": "Online via TN e-District / BCW Portal",
+    "official_source": "https://www.bcw.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "bc_educational_assistance_professional",
+    "name": "BC Educational Assistance – Professional Courses",
+    "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Educational Assistance",
+    "description": "Special educational fee assistance for BC students enrolled in Professional degree courses.",
+    "data_status": "verified",
+    "source_url": "https://www.bcw.tn.gov.in/",
+    "source_title": "TN BC Welfare Professional Course Educational Assistance",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual professional course fee assistance stipend.",
+    "benefit_amount": 12000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 12000.0,
+        "currency": "INR",
+        "description": "Professional fee reimbursement & stipend"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["BC", "BCM"],
+      "max_income": 250000.0,
+      "education_levels": ["UG"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online via BC Welfare e-Scholarship portal",
+    "official_source": "https://www.bcw.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "mbc_educational_assistance_professional",
+    "name": "MBC Educational Assistance – Professional Courses",
+    "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Educational Assistance",
+    "description": "Special educational fee assistance for MBC/DNC students enrolled in Professional degree courses.",
+    "data_status": "verified",
+    "source_url": "https://www.bcw.tn.gov.in/",
+    "source_title": "TN MBC Welfare Professional Course Educational Assistance",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual professional course fee assistance stipend.",
+    "benefit_amount": 12000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 12000.0,
+        "currency": "INR",
+        "description": "Professional fee reimbursement & stipend"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["MBC", "DNC", "MBC/DNC"],
+      "max_income": 250000.0,
+      "education_levels": ["UG"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online via BC/MBC Welfare e-Scholarship portal",
+    "official_source": "https://www.bcw.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "bc_educational_assistance_graduates",
+    "name": "BC Educational Assistance – Graduates",
+    "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Educational Assistance",
+    "description": "Financial aid for BC students pursuing General Under-Graduate degree courses in government and aided institutions.",
+    "data_status": "verified",
+    "source_url": "https://www.bcw.tn.gov.in/",
+    "source_title": "TN BC Welfare General Degree Educational Assistance",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual grant toward educational fees and books.",
+    "benefit_amount": 5000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 5000.0,
+        "currency": "INR",
+        "description": "Annual educational fee grant"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["BC", "BCM"],
+      "max_income": 250000.0,
+      "education_levels": ["UG"],
+      "college_types": ["government", "aided"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Through institution head to District BC Welfare Officer",
+    "official_source": "https://www.bcw.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "mbc_educational_assistance_graduates",
+    "name": "MBC Educational Assistance – Graduates",
+    "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Educational Assistance",
+    "description": "Financial aid for MBC/DNC students pursuing General Under-Graduate degree courses in government and aided institutions.",
+    "data_status": "verified",
+    "source_url": "https://www.bcw.tn.gov.in/",
+    "source_title": "TN MBC Welfare General Degree Educational Assistance",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual grant toward educational fees and books.",
+    "benefit_amount": 5000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 5000.0,
+        "currency": "INR",
+        "description": "Annual educational fee grant"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["MBC", "DNC", "MBC/DNC"],
+      "max_income": 250000.0,
+      "education_levels": ["UG"],
+      "college_types": ["government", "aided"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Through institution head to District BC/MBC Welfare Officer",
+    "official_source": "https://www.bcw.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "bc_educational_assistance_polytechnic",
+    "name": "BC Educational Assistance – Polytechnic Students",
+    "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Educational Assistance",
+    "description": "Special educational aid for BC/BCM polytechnic diploma students studying in Government and Aided Polytechnic Colleges.",
+    "data_status": "verified",
+    "source_url": "https://www.bcw.tn.gov.in/",
+    "source_title": "TN BC Welfare Polytechnic Educational Assistance",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual polytechnic course fee stipend.",
+    "benefit_amount": 4000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 4000.0,
+        "currency": "INR",
+        "description": "Annual polytechnic stipend"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["BC", "BCM"],
+      "max_income": 250000.0,
+      "education_levels": ["Diploma"],
+      "college_types": ["government", "aided"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Submission to Polytechnic Principal & District BC Welfare Office",
+    "official_source": "https://www.bcw.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "mbc_educational_assistance_polytechnic",
+    "name": "MBC Educational Assistance – Polytechnic Students",
+    "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Educational Assistance",
+    "description": "Special educational aid for MBC/DNC polytechnic diploma students studying in Government and Aided Polytechnic Colleges.",
+    "data_status": "verified",
+    "source_url": "https://www.bcw.tn.gov.in/",
+    "source_title": "TN MBC Welfare Polytechnic Educational Assistance",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual polytechnic course fee stipend.",
+    "benefit_amount": 4000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 4000.0,
+        "currency": "INR",
+        "description": "Annual polytechnic stipend"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["MBC", "DNC", "MBC/DNC"],
+      "max_income": 250000.0,
+      "education_levels": ["Diploma"],
+      "college_types": ["government", "aided"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Submission to Polytechnic Principal & District MBC Welfare Office",
+    "official_source": "https://www.bcw.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "minority_post_matric_nsp",
+    "name": "Minority Post-Matric Scholarship (NSP)",
+    "department": "Ministry of Minority Affairs",
+    "scheme_type": "Scholarship",
+    "description": "Post-matric scholarship for religious minority students enrolled in Higher Secondary, UG, PG, or Diploma courses.",
+    "data_status": "verified",
+    "source_url": "https://scholarships.gov.in/",
+    "source_title": "National Scholarship Portal - Post-Matric Minority Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Admission/tuition fee reimbursement and maintenance allowance up to Rs. 10,000 per annum.",
+    "benefit_amount": 10000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 10000.0,
+        "currency": "INR",
+        "description": "Maintenance allowance and tuition fee support"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "minority_required": true,
+      "max_income": 200000.0,
+      "min_marks": 50.0,
+      "education_levels": ["UG", "PG", "Diploma"]
+    },
+    "conflicts": ["minority_scholarship"],
+    "conflicts_with": ["minority_scholarship"],
+    "application_method": "Online registration on National Scholarship Portal (NSP)",
+    "official_source": "https://scholarships.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "minority_pre_matric_nsp",
+    "name": "Minority Pre-Matric Scholarship (NSP)",
+    "department": "Ministry of Minority Affairs",
+    "scheme_type": "Scholarship",
+    "description": "Pre-matric scholarship for minority students studying in classes 9 and 10 to support basic education.",
+    "data_status": "verified",
+    "source_url": "https://scholarships.gov.in/",
+    "source_title": "National Scholarship Portal - Pre-Matric Minority Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual course fee and maintenance allowance of Rs. 4,000.",
+    "benefit_amount": 4000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 4000.0,
+        "currency": "INR",
+        "description": "Annual school fee and maintenance stipend"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "minority_required": true,
+      "max_income": 100000.0,
+      "min_marks": 50.0,
+      "education_levels": ["School"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online registration on National Scholarship Portal (NSP)",
+    "official_source": "https://scholarships.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "pm_yasasvi_scholarship",
+    "name": "PM-YASASVI Scholarship for OBC/EBC/DNT students",
+    "department": "Ministry of Social Justice and Empowerment",
+    "scheme_type": "Scholarship",
+    "description": "PM Young Achievers Scholarship Award Scheme for Vibrant India for OBC, EBC, and DNT students.",
+    "data_status": "verified",
+    "source_url": "https://scholarships.gov.in/",
+    "source_title": "National Scholarship Portal - PM-YASASVI Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Academic stipend and fee reimbursement up to Rs. 20,000/yr.",
+    "benefit_amount": 20000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 20000.0,
+        "currency": "INR",
+        "description": "Academic stipend and fee reimbursement"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["BC", "BCM", "MBC", "DNC", "OBC"],
+      "max_income": 250000.0,
+      "education_levels": ["UG", "PG", "Diploma"],
+      "min_marks": 60.0
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online application via National Scholarship Portal (NSP)",
+    "official_source": "https://scholarships.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "pmss_scholarship",
+    "name": "Prime Minister's Scholarship Scheme (PMSS)",
+    "department": "Kendriya Sainik Board",
+    "scheme_type": "Scholarship",
+    "description": "Scholarship for dependent wards and widows of Ex-Servicemen / Ex-Coast Guard personnel pursuing professional degree courses.",
+    "data_status": "requires_verification - Defence ex-serviceman priority category rank validation required",
+    "source_url": "https://ksb.gov.in/",
+    "source_title": "Kendriya Sainik Board - Prime Minister Scholarship Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Rs. 3,000 per month for female students and Rs. 2,500 per month for male students.",
+    "benefit_amount": 36000.0,
+    "benefits": [
+      {
+        "type": "monthly",
+        "amount": 3000.0,
+        "currency": "INR",
+        "description": "Monthly scholarship grant for professional education"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "education_levels": ["UG"],
+      "min_marks": 60.0
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online application on Kendriya Sainik Board (KSB) portal",
+    "official_source": "https://ksb.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "sc_special_scholarship",
+    "name": "SC Special Scholarship Scheme",
+    "department": "Adi Dravidar and Tribal Welfare Department",
+    "scheme_type": "Educational Assistance",
+    "description": "Special financial assistance for SC students pursuing full-time higher education in premier state institutions.",
+    "data_status": "verified",
+    "source_url": "https://www.adwelfare.tn.gov.in/",
+    "source_title": "TN ADW Special Educational Assistance Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual special educational stipend of Rs. 12,000.",
+    "benefit_amount": 12000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 12000.0,
+        "currency": "INR",
+        "description": "Special educational grant and book bank allowance"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["SC", "SCA"],
+      "max_income": 250000.0,
+      "education_levels": ["UG", "PG"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online submission via ADW Portal & College Principal endorsement",
+    "official_source": "https://www.adwelfare.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "st_special_scholarship",
+    "name": "ST Special Scholarship Scheme",
+    "department": "Tribal Welfare Department",
+    "scheme_type": "Educational Assistance",
+    "description": "Special financial assistance for Scheduled Tribe (ST) students pursuing degree and diploma education in Tamil Nadu.",
+    "data_status": "verified",
+    "source_url": "https://www.adwelfare.tn.gov.in/",
+    "source_title": "TN Tribal Welfare Special Assistance Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual special educational stipend of Rs. 12,000.",
+    "benefit_amount": 12000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 12000.0,
+        "currency": "INR",
+        "description": "Special educational grant and stipend"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["ST"],
+      "max_income": 250000.0,
+      "education_levels": ["UG", "PG", "Diploma"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online submission via Tribal Welfare Portal",
+    "official_source": "https://www.adwelfare.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "cm_merit_award_sc_st",
+    "name": "Chief Minister Merit Award / SC-ST Education Assistance",
+    "department": "Adi Dravidar and Tribal Welfare Department",
+    "scheme_type": "Scholarship",
+    "description": "Award granted to high-performing SC/ST/SCC students in Class 12 public examinations pursuing higher studies.",
+    "data_status": "verified",
+    "source_url": "https://www.adwelfare.tn.gov.in/",
+    "source_title": "TN Adi Dravidar Welfare - CM Merit Award",
+    "verified_on": "2026-09-10",
+    "benefit": "Annual award cash prize of Rs. 3,000 per year throughout course duration.",
+    "benefit_amount": 3000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 3000.0,
+        "currency": "INR",
+        "description": "Chief Minister Merit Cash Award"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["SC", "SCA", "ST"],
+      "min_marks": 70.0,
+      "education_levels": ["UG", "Diploma"],
+      "max_income": 250000.0
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Nominated by Headmaster / Principal & District ADW Officer",
+    "official_source": "https://www.adwelfare.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "disability_reader_allowance",
+    "name": "Educational Support & Reader Allowance for Students with Disabilities",
+    "department": "Commissionerate for Welfare of Differently Abled Persons",
+    "scheme_type": "Educational Assistance",
+    "description": "Reader allowance and educational support for visually impaired and differently abled students in degree courses.",
+    "data_status": "verified",
+    "source_url": "https://www.scd.tn.gov.in/specialedu.php",
+    "source_title": "TN Commissionerate for Welfare of Differently Abled Persons - Reader Allowance",
+    "verified_on": "2026-09-10",
+    "benefit": "Monthly reader allowance of Rs. 1,500 per month.",
+    "benefit_amount": 18000.0,
+    "benefits": [
+      {
+        "type": "monthly",
+        "amount": 1500.0,
+        "currency": "INR",
+        "description": "Monthly reader & scribe allowance"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "disability_required": true,
+      "min_disability_percentage": 40.0,
+      "education_levels": ["UG", "PG", "Diploma"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Application through College Disability Cell to DDAWO",
+    "official_source": "https://www.scd.tn.gov.in/specialedu.php",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "free_education_pg_bc_mbc_dnc",
+    "name": "Free Education Scheme for BC/MBC/DNC (PG Degree Courses)",
+    "department": "Backward Classes, Most Backward Classes and Minorities Welfare Department",
+    "scheme_type": "Fee Concession",
+    "description": "Complete tuition fee concession for BC/MBC/DNC female students pursuing PG 2-year degree courses in Government Arts and Science Colleges.",
+    "data_status": "verified",
+    "source_url": "https://www.bcw.tn.gov.in/",
+    "source_title": "TN BC & MBC Welfare - Free PG Education Policy",
+    "verified_on": "2026-09-10",
+    "benefit": "Full tuition fee waiver for PG degree.",
+    "benefit_amount": 0.0,
+    "benefits": [
+      {
+        "type": "fee_waiver",
+        "description": "Full tuition fee waiver for female PG students"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "categories": ["BC", "BCM", "MBC", "DNC"],
+      "gender": ["female"],
+      "education_levels": ["PG"],
+      "college_types": ["government"],
+      "max_income": 250000.0
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Direct application through Government College Office",
+    "official_source": "https://www.bcw.tn.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "central_sector_scheme_scholarship",
+    "name": "Central Sector Scheme of Scholarship for College and University Students",
+    "department": "Department of Higher Education",
+    "scheme_type": "Scholarship",
+    "description": "Financial support for meritorious students above 80th percentile in Class 12 board examination pursuing graduate studies.",
+    "data_status": "verified",
+    "source_url": "https://scholarships.gov.in/",
+    "source_title": "National Scholarship Portal - Central Sector Scheme (CSSS)",
+    "verified_on": "2026-09-10",
+    "benefit": "Rs. 12,000 per annum at UG level for 3 years.",
+    "benefit_amount": 12000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 12000.0,
+        "currency": "INR",
+        "description": "Annual merit scholarship grant"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "min_marks": 80.0,
+      "max_income": 450000.0,
+      "education_levels": ["UG", "PG"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online portal application via National Scholarship Portal (NSP)",
+    "official_source": "https://scholarships.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "post_graduate_indira_gandhi_single_girl",
+    "name": "Post-Graduate Indira Gandhi Scholarship for Single Girl Child",
+    "department": "University Grants Commission",
+    "scheme_type": "Scholarship",
+    "description": "UGC scholarship for single girl child admitted to first-year regular PG degree programs.",
+    "data_status": "requires_verification - Single girl child affidavit verification criteria pending official UGC portal update",
+    "source_url": "https://scholarships.gov.in/",
+    "source_title": "National Scholarship Portal - UGC Single Girl Child Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Rs. 36,200 per annum for 2 years.",
+    "benefit_amount": 36200.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 36200.0,
+        "currency": "INR",
+        "description": "PG educational allowance"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "gender": ["female"],
+      "education_levels": ["PG"],
+      "max_income": null
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online portal application via National Scholarship Portal (NSP)",
+    "official_source": "https://scholarships.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "aicte_pragati_scholarship",
+    "name": "AICTE Pragati Scholarship Scheme for Girl Students",
+    "department": "All India Council for Technical Education",
+    "scheme_type": "Scholarship",
+    "description": "AICTE scholarship empowering girl students admitted to technical diploma or degree courses in AICTE-approved institutions.",
+    "data_status": "requires_verification - AICTE approved college list verification pending",
+    "source_url": "https://scholarships.gov.in/",
+    "source_title": "National Scholarship Portal - AICTE Pragati Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Rs. 50,000 per annum toward college fees and educational support.",
+    "benefit_amount": 50000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 50000.0,
+        "currency": "INR",
+        "description": "Technical education grant"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "gender": ["female"],
+      "max_income": 800000.0,
+      "education_levels": ["UG", "Diploma"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online application via National Scholarship Portal (NSP)",
+    "official_source": "https://scholarships.gov.in/",
+    "last_verified": "2026-09-10"
+  },
+  {
+    "id": "aicte_saksham_scholarship",
+    "name": "AICTE Saksham Scholarship Scheme for Specially-Abled Students",
+    "department": "All India Council for Technical Education",
+    "scheme_type": "Scholarship",
+    "description": "Financial support for specially-abled students with disability not less than 40% admitted to AICTE approved technical degree/diploma courses.",
+    "data_status": "requires_verification - Disability certificate verification guidelines pending AICTE update",
+    "source_url": "https://scholarships.gov.in/",
+    "source_title": "National Scholarship Portal - AICTE Saksham Scheme",
+    "verified_on": "2026-09-10",
+    "benefit": "Rs. 50,000 per annum as lump sum assistance per year of study.",
+    "benefit_amount": 50000.0,
+    "benefits": [
+      {
+        "type": "annual",
+        "amount": 50000.0,
+        "currency": "INR",
+        "description": "Educational grant for technical studies"
+      }
+    ],
+    "frequency": "annual",
+    "demo": false,
+    "eligibility": {
+      "disability_required": true,
+      "min_disability_percentage": 40.0,
+      "max_income": 800000.0,
+      "education_levels": ["UG", "Diploma"]
+    },
+    "conflicts": [],
+    "conflicts_with": [],
+    "application_method": "Online application via National Scholarship Portal (NSP)",
+    "official_source": "https://scholarships.gov.in/",
+    "last_verified": "2026-09-10"
   }
 ]

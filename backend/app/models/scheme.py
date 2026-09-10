@@ -17,6 +17,8 @@ class SchemeEligibility(BaseModel):
     min_disability_percentage: Optional[float] = None
     minority_required: Optional[bool] = None
     first_graduate_required: Optional[bool] = None
+    hostel_required: Optional[bool] = None
+    defence_background_required: Optional[bool] = None
 
 class Scheme(BaseModel):
     """
@@ -27,10 +29,18 @@ class Scheme(BaseModel):
     department: str
     description: str
     benefit: str
-    benefit_amount: float
-    frequency: str
-    demo: bool = True
-    data_status: str = 'sample/demo - verify against current government notification'
+    benefit_amount: float = 0.0
+    frequency: str = "annual"
+    demo: bool = False
+    data_status: str = 'verified'
+    scheme_type: Optional[str] = 'Scholarship'
+    source_url: Optional[str] = ''
+    source_title: Optional[str] = ''
+    verified_on: Optional[str] = ''
+    benefits: List[dict] = []
+    application_method: Optional[str] = ''
+    conflicts: List[str] = []
+    requires_verification: Optional[bool] = None
     eligibility: SchemeEligibility
     conflicts_with: List[str] = []
     official_source: str = ''
